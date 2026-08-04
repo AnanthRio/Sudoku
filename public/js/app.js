@@ -13,9 +13,10 @@ const gameBackBtn = document.getElementById("gameBackBtn");
 const continueGameArea = document.getElementById("continueGameArea");
 const continueGameBtn = document.getElementById("continueGameBtn");
 const homeActions = document.querySelector(".home-actions");
-const winHomeBtn =document.getElementById("winHomeBtn");
-const winNewGameBtn =document.getElementById("winNewGameBtn");
+const winHomeBtn = document.getElementById("winHomeBtn");
+const winNewGameBtn = document.getElementById("winNewGameBtn");
 const themeToggle = document.getElementById("themeToggle");
+const savedTheme = localStorage.getItem("sudokuTheme");
 
 
 let selectedDifficulty = null;
@@ -198,8 +199,22 @@ themeToggle.addEventListener("click", function () {
 
     if (document.body.classList.contains("dark-mode")) {
         themeToggle.textContent = "☀️";
+        localStorage.setItem(
+            "sudokuTheme",
+            "dark"
+        );
+
     } else {
         themeToggle.textContent = "🌙";
+        localStorage.setItem(
+            "sudokuTheme",
+            "light"
+        );
     }
-
 });
+
+
+if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    themeToggle.textContent = "☀️";
+}
