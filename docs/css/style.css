@@ -20,6 +20,7 @@ body {
     --secondary-text: #777777;
     --border-color: #bbbbbb;
     --primary-color: #1D64DB;
+    --selected-bg: #83b0ff;
 
     --cell-bg: #ffffff;
     --hover-bg: #eef4ff;
@@ -37,6 +38,107 @@ body.dark-mode {
     --cell-bg: #202020;
     --hover-bg: #2a3445;
     --related-bg: #26364f;
+}
+
+body[data-theme="blue"] {
+    --bg-color: #dbe8f8;
+    --surface-color: #edf4fc;
+    --cell-bg: #e5effb;
+    --hover-bg: #cbdff6;
+    --related-bg: #adcdf0;
+    --selected-bg: #6fa7e8;
+    --text-color: #1d2f46;
+    --secondary-text: #526b88;
+    --border-color: #7898bd;
+}
+
+body[data-theme="green"] {
+    --bg-color: #d2eddd;
+    --surface-color: #e8f6ed;
+    --cell-bg: #e0f1e6;
+    --hover-bg: #c5e4d0;
+    --related-bg: #a9d7b9;
+    --selected-bg: #55bd91;
+    --text-color: #1f3327;
+    --secondary-text: #526b5b;
+    --border-color: #6f9b7d;
+}
+
+body[data-theme="purple"] {
+    --bg-color: #e6dcf2;
+    --surface-color: #f1eaf8;
+    --cell-bg: #ebe2f5;
+    --hover-bg: #d8c7ea;
+    --related-bg: #c4a9df;
+    --selected-bg: #9b72c7;
+    --text-color: #30233d;
+    --secondary-text: #695878;
+    --border-color: #927aaa;
+}
+
+body[data-theme="orange"] {
+    --bg-color: #f3e1cf;
+    --surface-color: #faf0e6;
+    --cell-bg: #f6e8d9;
+    --hover-bg: #ecd0b2;
+    --related-bg: #dfb989;
+    --selected-bg: #d99052;
+    --text-color: #3c2a1d;
+    --secondary-text: #765d49;
+    --border-color: #ad8869;
+}
+
+
+/* =========================
+   DARK + COLOR THEMES
+========================= */
+
+body.dark-mode[data-theme="blue"] {
+    --bg-color: #0d1b2a;
+    --surface-color: #13283d;
+    --cell-bg: #17334d;
+    --hover-bg: #1e4568;
+    --related-bg: #285b87;
+    --selected-bg: #3f7fba;
+    --text-color: #eef7ff;
+    --secondary-text: #abc8df;
+    --border-color: #527da3;
+}
+
+body.dark-mode[data-theme="green"] {
+    --bg-color: #0d2115;
+    --surface-color: #143321;
+    --cell-bg: #19402a;
+    --hover-bg: #205438;
+    --related-bg: #2b704b;
+    --selected-bg: #45a66f;
+    --text-color: #effbf3;
+    --secondary-text: #acd2b9;
+    --border-color: #4e8261;
+}
+
+body.dark-mode[data-theme="purple"] {
+    --bg-color: #1b1028;
+    --surface-color: #2a183d;
+    --cell-bg: #35204c;
+    --hover-bg: #462b63;
+    --related-bg: #5c397f;
+    --selected-bg: #8a5db5;
+    --text-color: #faf2ff;
+    --secondary-text: #cfb5df;
+    --border-color: #795a91;
+}
+
+body.dark-mode[data-theme="orange"] {
+    --bg-color: #26170c;
+    --surface-color: #382211;
+    --cell-bg: #462b16;
+    --hover-bg: #5b381c;
+    --related-bg: #794b26;
+    --selected-bg: #b87538;
+    --text-color: #fff6ed;
+    --secondary-text: #dfbea0;
+    --border-color: #95683f;
 }
 
 
@@ -383,8 +485,8 @@ Remaining cells
 }
 
 .sudoku-cell.selected-cell {
-    background: #83b0ff;
-    box-shadow: inset 0 0 0 2px #5b96f7;
+    background: var(--selected-bg);
+    box-shadow: inset 0 0 0 2px var(--selected-bg);
 }
 
 .correct-cell {
@@ -602,4 +704,50 @@ Remaining cells
 
 .theme-toggle:hover {
     background: #eee;
+}
+
+/* ========================
+    Color
+======================== */
+
+.color-theme-btn {
+    position: absolute;
+    top: 20px;
+    right: 80px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background: var(--surface-color);
+    color: var(--text-color);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.theme-menu {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 80px;
+    width: 150px;
+    padding: 8px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    z-index: 10;
+}
+
+.theme-option {
+    width: 100%;
+    padding: 9px 10px;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--text-color);
+    text-align: left;
+    cursor: pointer;
+}
+
+.theme-option:hover {
+    background: var(--hover-bg);
 }

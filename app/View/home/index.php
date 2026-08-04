@@ -24,6 +24,34 @@
             🌙
         </button>
 
+        <button id="colorThemeBtn" class="color-theme-btn">
+            🎨
+        </button>
+
+        <div id="themeMenu" class="theme-menu">
+
+            <button class="theme-option" data-theme="default">
+                ⚪ Default
+            </button>
+
+            <button class="theme-option" data-theme="blue">
+                🔵 Blue
+            </button>
+
+            <button class="theme-option" data-theme="green">
+                🟢 Green
+            </button>
+
+            <button class="theme-option" data-theme="purple">
+                🟣 Purple
+            </button>
+
+            <button class="theme-option" data-theme="orange">
+                🟠 Orange
+            </button>
+
+        </div>
+
         <div class="home-actions">
 
             <div id="continueGameArea" class="continue-game-area">

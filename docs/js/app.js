@@ -17,6 +17,9 @@ const winHomeBtn = document.getElementById("winHomeBtn");
 const winNewGameBtn = document.getElementById("winNewGameBtn");
 const themeToggle = document.getElementById("themeToggle");
 const savedTheme = localStorage.getItem("sudokuTheme");
+const colorThemeBtn = document.getElementById("colorThemeBtn");
+const themeMenu = document.getElementById("themeMenu");
+const themeOptions = document.querySelectorAll(".theme-option");
 
 
 let selectedDifficulty = null;
@@ -171,6 +174,20 @@ winNewGameBtn.addEventListener("click", function () {
 
 window.addEventListener("DOMContentLoaded", function () {
 
+
+    const savedColorTheme =
+        localStorage.getItem("sudokuColorTheme");
+
+    if (
+        savedColorTheme &&
+        savedColorTheme !== "default"
+    ) {
+        document.body.setAttribute(
+            "data-theme",
+            savedColorTheme
+        );
+    }
+
     if (hasSavedGame()) {
 
         const savedGame = JSON.parse(
@@ -218,3 +235,28 @@ if (savedTheme === "dark") {
     document.body.classList.add("dark-mode");
     themeToggle.textContent = "☀️";
 }
+
+colorThemeBtn.addEventListener("click", function () {
+    if (themeMenu.style.display === "block") {
+        themeMenu.style.display = "none";
+    } else {
+        themeMenu.style.display = "block";
+    }
+});
+
+themeOptions.forEach(function (button) {
+    button.addEventListener("click", function () {
+
+        const theme = this.dataset.theme;
+        if (theme === "default") {
+            document.body.removeAttribute("data-theme");
+            localStorage.setItem("sudokuColorTheme", "default");
+
+        } else {
+            document.body.setAttribute("data-theme", theme);
+            localStorage.setItem("sudokuColorTheme", theme);
+        }
+        themeMenu.style.display = "none";
+    });
+
+});
