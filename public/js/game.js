@@ -86,13 +86,7 @@ function createBoard(size, difficulty) {
                 cell.textContent = "";
                 cell.classList.add("empty-cell");
                 cell.addEventListener("click", function () {
-                    // Remove selection from previous cell
-                    if (selectedCell !== null) {
-                        selectedCell.classList.remove("selected-cell");
-                    }
-                    // Select this cell
-                    selectedCell = this;
-                    selectedCell.classList.add("selected-cell");
+                    selectCell(this);
                 });
             }
 
@@ -322,6 +316,69 @@ document.addEventListener("keydown", function (event) {
 });
 
 
+function selectCell(cell) {
+
+    // Remove old selected cell
+    if (selectedCell !== null) {
+        selectedCell.classList.remove("selected-cell");
+    }
+
+    selectedCell = cell;
+    selectedCell.classList.add("selected-cell");
+
+    highlightRelatedCells(
+        Number(selectedCell.dataset.row),
+        Number(selectedCell.dataset.col)
+    );
+}
+
+
+function highlightRelatedCells(selectedRow, selectedCol) {
+
+    const size = solutionBoard.length;
+    const cells = document.querySelectorAll(".sudoku-cell");
+
+    // Remove previous highlights
+    cells.forEach(function (cell) {
+        cell.classList.remove("related-cell");
+    });
+
+    let boxRows;
+    let boxCols;
+
+    if (size === 6) {
+        boxRows = 2;
+        boxCols = 3;
+    } else {
+        boxRows = 3;
+        boxCols = 3;
+    }
+
+    const selectedBoxRow =
+        Math.floor(selectedRow / boxRows);
+
+    const selectedBoxCol =
+        Math.floor(selectedCol / boxCols);
+
+    cells.forEach(function (cell) {
+
+        const row = Number(cell.dataset.row);
+        const col = Number(cell.dataset.col);
+
+        const sameRow = row === selectedRow;
+        const sameColumn = col === selectedCol;
+
+        const sameBox =
+            Math.floor(row / boxRows) === selectedBoxRow &&
+            Math.floor(col / boxCols) === selectedBoxCol;
+
+        if (sameRow || sameColumn || sameBox) {
+            cell.classList.add("related-cell");
+        }
+    });
+}
+
+
 function moveSelectedCell(direction) {
 
     if (selectedCell === null) {
@@ -361,8 +418,5 @@ function moveSelectedCell(direction) {
         `.sudoku-cell[data-row="${row}"][data-col="${col}"]`
     );
 
-    // Remove old selection
-    selectedCell.classList.remove("selected-cell");
-    selectedCell = nextCell;
-    selectedCell.classList.add("selected-cell");
+    selectCell(nextCell);
 }

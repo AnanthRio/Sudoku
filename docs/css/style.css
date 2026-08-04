@@ -349,6 +349,10 @@ Remaining cells
     background: #444;
 }
 
+.sudoku-cell.related-cell {
+    background: #e8f0fe;
+}
+
 .sudoku-cell.selected-cell {
     background: #b8d2ff;
     box-shadow: inset 0 0 0 2px #1D64DB;
