@@ -20,6 +20,9 @@
                 Keep your mind sharp ✏️
             </p>
         </div>
+        <button id="themeToggle" class="theme-toggle">
+            🌙
+        </button>
 
         <div class="home-actions">
 

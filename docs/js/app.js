@@ -15,6 +15,7 @@ const continueGameBtn = document.getElementById("continueGameBtn");
 const homeActions = document.querySelector(".home-actions");
 const winHomeBtn =document.getElementById("winHomeBtn");
 const winNewGameBtn =document.getElementById("winNewGameBtn");
+const themeToggle = document.getElementById("themeToggle");
 
 
 let selectedDifficulty = null;
@@ -190,4 +191,15 @@ window.addEventListener("DOMContentLoaded", function () {
             ":" +
             String(seconds).padStart(2, "0");
     }
+});
+
+themeToggle.addEventListener("click", function () {
+    document.body.classList.toggle("dark-mode");
+
+    if (document.body.classList.contains("dark-mode")) {
+        themeToggle.textContent = "☀️";
+    } else {
+        themeToggle.textContent = "🌙";
+    }
+
 });

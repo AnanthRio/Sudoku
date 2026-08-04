@@ -8,8 +8,35 @@
 body {
     min-height: 100vh;
     font-family: Arial, sans-serif;
-    background: #f5f7fa;
-    color: #222;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: background 0.25s, color 0.25s;
+}
+
+:root {
+    --bg-color: #f5f7fa;
+    --surface-color: #ffffff;
+    --text-color: #222222;
+    --secondary-text: #777777;
+    --border-color: #bbbbbb;
+    --primary-color: #1D64DB;
+
+    --cell-bg: #ffffff;
+    --hover-bg: #eef4ff;
+    --related-bg: #e8f0fe;
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --surface-color: #1e1e1e;
+    --text-color: #eeeeee;
+    --secondary-text: #aaaaaa;
+    --border-color: #555555;
+    --primary-color: #4d8df7;
+
+    --cell-bg: #202020;
+    --hover-bg: #2a3445;
+    --related-bg: #26364f;
 }
 
 
@@ -45,7 +72,7 @@ body {
 
 .game-tagline {
     font-size: 22px;
-    color: #777;
+    color: var(--secondary-text);
     letter-spacing: 1px;
     margin-top: 8px;
 }
@@ -113,7 +140,8 @@ body {
     width: 420px;
     max-width: 90%;
     padding: 35px;
-    background: white;
+    background: var(--surface-color);
+    color: var(--text-color);
     border-radius: 14px;
     text-align: center;
 }
@@ -125,7 +153,7 @@ body {
 
 .modal-content p {
     margin-bottom: 25px;
-    color: #666;
+    color: var(--secondary-text);
 }
 
 
@@ -283,33 +311,34 @@ body {
     background: none;
     font-size: 16px;
     font-weight: 600;
-    color: #555;
+    color: var(--text-color);
     cursor: pointer;
     margin-bottom: 20px;
 }
 
 .game-back-btn:hover {
-    color: #1D64DB;
+    color: var(--primary-color);
 }
 
 .sudoku-board {
     display: grid;
     width: 450px;
     height: 450px;
-    border: 3px solid #222;
+    border: 3px solid var(--text-color);
 }
 
 .sudoku-cell {
+    background: var(--cell-bg);
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #bbb;
+    border: 1px solid var(--border-color);
     font-size: 24px;
     font-weight: 600;
 }
 
 .given-cell {
-    color: #222;
+    color: var(--text-color);
     font-weight: 700;
 }
 
@@ -318,7 +347,7 @@ body {
 }
 
 .empty-cell:hover {
-    background: #eef4ff;
+    background: var(--hover-bg);
 }
 
 
@@ -350,12 +379,12 @@ Remaining cells
 }
 
 .sudoku-cell.related-cell {
-    background: #e8f0fe;
+    background: var(--related-bg);
 }
 
 .sudoku-cell.selected-cell {
-    background: #b8d2ff;
-    box-shadow: inset 0 0 0 2px #1D64DB;
+    background: #83b0ff;
+    box-shadow: inset 0 0 0 2px #5b96f7;
 }
 
 .correct-cell {
@@ -397,6 +426,7 @@ Remaining cells
 .pause-btn {
     border: none;
     background: none;
+    color: var(--text-color);
     font-size: 20px;
     cursor: pointer;
 }
@@ -416,8 +446,9 @@ Remaining cells
     padding: 9px 20px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    background: white;
-    color: #333;
+    border-color: var(--border-color);
+    background: var(--surface-color);
+    color: var(--text-color);
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -430,11 +461,11 @@ Remaining cells
 /* Border styles for 3x3 boxes */
 
 .sudoku-cell.box-border-right {
-    border-right: 3px solid #222;
+    border-right: 3px solid var(--text-color);
 }
 
 .sudoku-cell.box-border-bottom {
-    border-bottom: 3px solid #222;
+    border-bottom: 3px solid var(--text-color);
 }
 
 /* =========================
@@ -455,13 +486,13 @@ Remaining cells
 .win-stats div {
     flex: 1;
     padding: 15px;
-    background: #f5f7fa;
+    background: var(--bg-color);
     border-radius: 8px;
 }
 
 .win-stats span {
     display: block;
-    color: #777;
+    color: var(--secondary-text);
     font-size: 14px;
     margin-bottom: 5px;
 }
@@ -490,7 +521,7 @@ Remaining cells
     justify-content: space-between;
     margin: 25px 0;
     padding: 15px;
-    background: #f5f7fa;
+    background: var(--bg-color);
     border-radius: 8px;
     font-size: 16px;
 }
@@ -511,8 +542,9 @@ Remaining cells
     top: 75px;
     width: 280px;
     padding: 22px;
-    background: white;
-    border: 1px solid #ddd;
+    background: var(--surface-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
 }
 
@@ -522,7 +554,7 @@ Remaining cells
 }
 
 .how-to-play > p {
-    color: #666;
+    color: var(--secondary-text);
     line-height: 1.5;
     margin-bottom: 18px;
 }
@@ -539,13 +571,35 @@ Remaining cells
 .game-tip {
     margin-top: 20px;
     padding: 12px;
-    background: #f5f7fa;
+    background: var(--bg-color);
     border-radius: 8px;
 }
 
 .game-tip p {
     margin-top: 6px;
-    color: #666;
+    color: var(--secondary-text);
     font-size: 14px;
     line-height: 1.4;
+}
+
+/* =========================
+   Theme Toggle 
+========================= */
+
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    background: var(--surface-color);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    background: #eee;
 }
