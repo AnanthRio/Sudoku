@@ -1,0 +1,497 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    color: #222;
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+.home-container {
+    min-height: 100vh;
+    position: relative;
+}
+
+.home-header {
+    text-align: center;
+    padding-top: 40px;
+}
+
+.home-actions {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.game-title {
+    font-size: 56px;
+    letter-spacing: 17px;
+}
+
+.game-tagline {
+    font-size: 22px;
+    color: #777;
+    letter-spacing: 1px;
+    margin-top: 8px;
+}
+
+.new-game-btn {
+    padding: 14px 35px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background: #1D64DB;
+    color: white;
+    cursor: pointer;
+}
+
+.new-game-btn:hover {
+    background: #444;
+}
+
+.continue-game-area {
+    display: none;
+}
+
+.continue-game-btn {
+    width: 150px;
+    padding: 12px 25px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #222;
+    color: white;
+
+    cursor: pointer;
+}
+
+.continue-game-btn span {
+    display: block;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.continue-game-btn small {
+    display: block;
+    margin-top: 4px;
+    color: #ccc;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    position: relative;
+    width: 420px;
+    max-width: 90%;
+    padding: 35px;
+    background: white;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.modal-content p {
+    margin-bottom: 25px;
+    color: #666;
+}
+
+
+/* Close button */
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    border: none;
+    background: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+
+/* =========================
+   BOARD SIZE OPTIONS
+========================= */
+
+.board-options {
+    display: flex;
+    gap: 15px;
+}
+
+.board-size-btn {
+    flex: 1;
+    padding: 25px 10px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.board-size-btn span {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.board-size-btn small {
+    font-size: 14px;
+    color: #777;
+}
+
+.board-size-btn:hover {
+    border-color: #222;
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   DIFFICULTY OPTIONS
+========================= */
+
+.difficulty-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.difficulty-section {
+    display: none;
+}
+
+.difficulty-options {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.difficulty-option {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.difficulty-option input {
+    margin-right: 10px;
+}
+
+
+/* Radio button */
+.difficulty-option input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    accent-color: #2196f3;
+    cursor: pointer;
+}
+
+.difficulty-option span {
+    cursor: pointer;
+}
+
+.back-btn{
+    padding: 9px 18px;
+    border: none;
+    border-radius: 6px;
+    background: #222;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: #444;
+}
+
+.next-btn {
+    padding: 9px 18px;
+    border: none;
+    border-radius: 6px;
+    background: #1D64DB;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.next-btn:hover {
+    background: #444;
+}
+
+
+/* =========================
+   Game Board
+========================= */
+
+.game-section {
+    display: none;
+    margin: 40px auto;
+    width: fit-content;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.game-back-btn {
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.game-back-btn:hover {
+    color: #1D64DB;
+}
+
+.sudoku-board {
+    display: grid;
+    width: 450px;
+    height: 450px;
+    border: 3px solid #222;
+}
+
+.sudoku-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #bbb;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.given-cell {
+    color: #222;
+    font-weight: 700;
+}
+
+.empty-cell {
+    cursor: pointer;
+}
+
+.empty-cell:hover {
+    background: #eef4ff;
+}
+
+
+/* ================
+Remaining cells 
+==================*/
+
+.number-pad {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.number-btn {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 6px;
+    background: #1D64DB;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.number-btn:hover {
+    background: #444;
+}
+
+.sudoku-cell.selected-cell {
+    background: #b8d2ff;
+    box-shadow: inset 0 0 0 2px #1D64DB;
+}
+
+.correct-cell {
+    color: #2e9d50;
+    font-weight: 700;
+}
+
+.wrong-cell {
+    color: #e53935;
+    font-weight: 700;
+}
+
+/* =========================
+   Pause Button 
+========================= */
+
+.game-area {
+    position: relative;
+}
+
+.pause-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.25);
+    font-size: 24px;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.sudoku-board.paused {
+    filter: blur(8px);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.pause-btn {
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+/* =========================
+   Erase Button
+========================= */
+
+.game-tools {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.erase-btn {
+    padding: 9px 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: white;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.erase-btn:hover {
+    background: #f0f0f0;
+}
+
+/* Border styles for 3x3 boxes */
+
+.sudoku-cell.box-border-right {
+    border-right: 3px solid #222;
+}
+
+.sudoku-cell.box-border-bottom {
+    border-bottom: 3px solid #222;
+}
+
+/* =========================
+   Win Modal
+========================= */
+
+.win-content {
+    width: 380px;
+}
+
+.win-stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.win-stats div {
+    flex: 1;
+    padding: 15px;
+    background: #f5f7fa;
+    border-radius: 8px;
+}
+
+.win-stats span {
+    display: block;
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.win-stats strong {
+    font-size: 18px;
+}
+
+.win-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+
+/* =========================
+   Game over Modal
+========================= */
+
+.game-over-content {
+    width: 380px;
+}
+
+.game-over-stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0;
+    padding: 15px;
+    background: #f5f7fa;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.game-over-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
