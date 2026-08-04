@@ -73,6 +73,26 @@
                 </div>
             </div>
 
+            <aside class="how-to-play">
+                <h3>How to Play</h3>
+                <p id="ruleIntro">
+                    Fill every empty cell using numbers 1–6.
+                </p>
+
+                <ul>
+                    <li>No repeated numbers in a row.</li>
+                    <li>No repeated numbers in a column.</li>
+                    <li id="boxRule">No repeated numbers in each 2×3 box.</li>
+                    <li>You can make up to 3 mistakes.</li>
+                </ul>
+
+                <div class="game-tip">
+                    <strong>💡 Tip</strong>
+                    <p>
+                        Look for a row, column, or box where only one number is missing.
+                    </p>
+                </div>
+            </aside>
         </section>
 
     </main>

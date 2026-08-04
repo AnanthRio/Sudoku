@@ -267,6 +267,7 @@ body {
     display: none;
     margin: 40px auto;
     width: fit-content;
+    position: relative;
 }
 
 .game-info {
@@ -494,4 +495,53 @@ Remaining cells
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+}
+
+/* =========================
+   Rules
+========================= */
+
+.how-to-play {
+    position: absolute;
+    left: calc(100% + 50px);
+    top: 75px;
+    width: 280px;
+    padding: 22px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.how-to-play h3 {
+    margin-bottom: 15px;
+    font-size: 21px;
+}
+
+.how-to-play > p {
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 18px;
+}
+
+.how-to-play ul {
+    padding-left: 20px;
+}
+
+.how-to-play li {
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.game-tip {
+    margin-top: 20px;
+    padding: 12px;
+    background: #f5f7fa;
+    border-radius: 8px;
+}
+
+.game-tip p {
+    margin-top: 6px;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.4;
 }
