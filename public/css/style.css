@@ -21,7 +21,7 @@ body {
     --border-color: #bbbbbb;
     --primary-color: #1D64DB;
     --selected-bg: #83b0ff;
-
+    --correct-color: #007C91;
     --cell-bg: #ffffff;
     --hover-bg: #eef4ff;
     --related-bg: #e8f0fe;
@@ -34,7 +34,7 @@ body.dark-mode {
     --secondary-text: #aaaaaa;
     --border-color: #555555;
     --primary-color: #4d8df7;
-
+    --correct-color: #4DD0E1;
     --cell-bg: #202020;
     --hover-bg: #2a3445;
     --related-bg: #26364f;
@@ -490,7 +490,7 @@ Remaining cells
 }
 
 .correct-cell {
-    color: #2e9d50;
+    color: var(--correct-color);
     font-weight: 700;
 }
 
