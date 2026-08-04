@@ -24,7 +24,8 @@ const winTime = document.getElementById("winTime");
 const winMistakes = document.getElementById("winMistakes");
 const pauseBtn = document.getElementById("pauseBtn");
 const pauseOverlay = document.getElementById("pauseOverlay");
-
+const newBestMessage = document.getElementById("newBestMessage");
+const winBestTime = document.getElementById("winBestTime");
 
 
 function createBoard(size, difficulty) {
@@ -226,6 +227,95 @@ function saveGame() {
     );
 }
 
+function savePersonalBest() {
+
+    const size = solutionBoard.length;
+
+    const key =
+        `${size}x${size}-${selectedDifficulty}`;
+
+    const bestTimes =
+        JSON.parse(
+            localStorage.getItem("sudokuBestTimes")
+        ) || {};
+
+    const oldBest = bestTimes[key];
+
+    if (
+        oldBest === undefined ||
+        elapsedSeconds < oldBest
+    ) {
+        bestTimes[key] = elapsedSeconds;
+
+        localStorage.setItem(
+            "sudokuBestTimes",
+            JSON.stringify(bestTimes)
+        );
+        return true;
+    }
+    return false;
+}
+
+function getPersonalBest() {
+
+    const size = solutionBoard.length;
+
+    const key =
+        `${size}x${size}-${selectedDifficulty}`;
+
+    const bestTimes =
+        JSON.parse(
+            localStorage.getItem("sudokuBestTimes")
+        ) || {};
+
+    return bestTimes[key];
+}
+
+function getStats() {
+
+    return JSON.parse(
+        localStorage.getItem("sudokuStats")
+    ) || {
+        gamesPlayed: 0,
+        gamesWon: 0,
+        currentStreak: 0,
+        bestStreak: 0
+    };
+}
+
+function saveStats(stats) {
+
+    localStorage.setItem(
+        "sudokuStats",
+        JSON.stringify(stats)
+    );
+}
+
+function recordWin() {
+
+    const stats = getStats();
+
+    stats.gamesPlayed++;
+    stats.gamesWon++;
+    stats.currentStreak++;
+
+    if (stats.currentStreak > stats.bestStreak) {
+        stats.bestStreak = stats.currentStreak;
+    }
+
+    saveStats(stats);
+}
+
+function recordLoss() {
+
+    const stats = getStats();
+
+    stats.gamesPlayed++;
+    stats.currentStreak = 0;
+
+    saveStats(stats);
+}
+
 
 // ==========================================
 // PAUSE / RESUME
@@ -290,9 +380,34 @@ function checkGameComplete() {
 function gameWon() {
 
     pauseTimer();
+
+    const isNewBest = savePersonalBest();
+    recordWin();
+    const bestTime = getPersonalBest();
+
+    localStorage.removeItem("sudokuSavedGame");
+
     winTime.textContent = gameTimer.textContent;
+
     winMistakes.textContent =
         `${mistakes}/${maxMistakes}`;
+
+    const bestMinutes =
+        Math.floor(bestTime / 60);
+
+    const bestSeconds =
+        bestTime % 60;
+
+    winBestTime.textContent =
+        String(bestMinutes).padStart(2, "0") +
+        ":" +
+        String(bestSeconds).padStart(2, "0");
+
+    if (isNewBest) {
+        newBestMessage.style.display = "block";
+    } else {
+        newBestMessage.style.display = "none";
+    }
 
     winModal.style.display = "flex";
 }
@@ -301,9 +416,11 @@ function gameWon() {
 function gameOver() {
 
     pauseTimer();
+    recordLoss();
+
+    localStorage.removeItem("sudokuSavedGame");
     // Show final time
-    gameOverTime.textContent =
-        gameTimer.textContent;
+    gameOverTime.textContent = gameTimer.textContent;
     // Show modal
     gameOverModal.style.display = "flex";
 }

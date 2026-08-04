@@ -67,6 +67,10 @@
                 New Game
             </button>
 
+            <button id="statsBtn" class="stats-btn">
+                📊 Statistics
+            </button>
+
         </div>
 
         <!-- Game -->
@@ -201,6 +205,9 @@
         <div class="modal-content win-content">
             <h2>🎉 Puzzle Complete!</h2>
             <p>Great job! You solved the puzzle.</p>
+            <p id="newBestMessage" class="new-best-message">
+                🏆 New Personal Best!
+            </p>
             <div class="win-stats">
                 <div>
                     <span>Time</span>
@@ -210,6 +217,11 @@
                 <div>
                     <span>Mistakes</span>
                     <strong id="winMistakes">0/3</strong>
+                </div>
+
+                <div>
+                    <span>Best</span>
+                    <strong id="winBestTime">--:--</strong>
                 </div>
             </div>
 
@@ -249,6 +261,82 @@
             </div>
         </div>
     </div>
+
+    <!-- Stats Modal -->
+    <div id="statsModal" class="stats-modal">
+
+    <div class="stats-content">
+
+        <button id="closeStatsBtn"
+                class="stats-close-btn">
+            ×
+        </button>
+
+        <h2>📊 Statistics</h2>
+
+        <div class="stats-summary">
+
+            <div class="stat-box">
+                <span>Games Played</span>
+                <strong id="statGamesPlayed">0</strong>
+            </div>
+
+            <div class="stat-box">
+                <span>Games Won</span>
+                <strong id="statGamesWon">0</strong>
+            </div>
+
+            <div class="stat-box">
+                <span>Win Rate</span>
+                <strong id="statWinRate">0%</strong>
+            </div>
+
+            <div class="stat-box">
+                <span>Best Streak</span>
+                <strong id="statBestStreak">0</strong>
+            </div>
+
+        </div>
+
+        <h3>🏆 Personal Bests</h3>
+
+        <div class="best-times-table">
+
+            <div class="best-header">
+                <span></span>
+                <strong>6×6</strong>
+                <strong>9×9</strong>
+            </div>
+
+            <div class="best-row">
+                <span>Easy</span>
+                <strong id="best6Easy">--:--</strong>
+                <strong id="best9Easy">--:--</strong>
+            </div>
+
+            <div class="best-row">
+                <span>Medium</span>
+                <strong id="best6Medium">--:--</strong>
+                <strong id="best9Medium">--:--</strong>
+            </div>
+
+            <div class="best-row">
+                <span>Hard</span>
+                <strong id="best6Hard">--:--</strong>
+                <strong id="best9Hard">--:--</strong>
+            </div>
+
+            <div class="best-row">
+                <span>Expert</span>
+                <strong id="best6Expert">--:--</strong>
+                <strong id="best9Expert">--:--</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
     <script src="js/sudoku.js"></script>
     <script src="js/timer.js"></script>

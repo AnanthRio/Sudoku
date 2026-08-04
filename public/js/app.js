@@ -20,6 +20,13 @@ const savedTheme = localStorage.getItem("sudokuTheme");
 const colorThemeBtn = document.getElementById("colorThemeBtn");
 const themeMenu = document.getElementById("themeMenu");
 const themeOptions = document.querySelectorAll(".theme-option");
+const statsBtn = document.getElementById("statsBtn");
+const statsModal = document.getElementById("statsModal");
+const closeStatsBtn = document.getElementById("closeStatsBtn");
+const statGamesPlayed = document.getElementById("statGamesPlayed");
+const statGamesWon = document.getElementById("statGamesWon");
+const statWinRate = document.getElementById("statWinRate");
+const statBestStreak = document.getElementById("statBestStreak");
 
 
 let selectedDifficulty = null;
@@ -260,3 +267,78 @@ themeOptions.forEach(function (button) {
     });
 
 });
+
+statsBtn.addEventListener("click", function () {
+    updateStatsDisplay();
+    statsModal.style.display = "flex";
+});
+
+closeStatsBtn.addEventListener("click", function () {
+    statsModal.style.display = "none";
+});
+
+statsModal.addEventListener("click", function (event) {
+
+    if (event.target === statsModal) {
+        statsModal.style.display = "none";
+    }
+
+});
+
+function formatBestTime(seconds) {
+
+    if (seconds === undefined) {
+        return "--:--";
+    }
+
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+
+    return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(secs).padStart(2, "0")
+    );
+}
+
+
+function updateStatsDisplay() {
+
+    const stats = getStats();
+
+    const bestTimes =
+        JSON.parse(
+            localStorage.getItem("sudokuBestTimes")
+        ) || {};
+
+    // General stats
+    statGamesPlayed.textContent =stats.gamesPlayed;
+    statGamesWon.textContent =stats.gamesWon;
+    statBestStreak.textContent =stats.bestStreak;
+
+    // Win rate
+    let winRate = 0;
+
+    if (stats.gamesPlayed > 0) {
+        winRate = Math.round(
+            (stats.gamesWon / stats.gamesPlayed) * 100
+        );
+    }
+
+    statWinRate.textContent =
+        winRate + "%";
+
+
+    // 6×6 Personal Bests
+    document.getElementById("best6Easy").textContent = formatBestTime(bestTimes["6x6-easy"]);
+    document.getElementById("best6Medium").textContent = formatBestTime(bestTimes["6x6-medium"]);
+    document.getElementById("best6Hard").textContent = formatBestTime(bestTimes["6x6-hard"]);
+    document.getElementById("best6Expert").textContent = formatBestTime(bestTimes["6x6-expert"]);
+
+
+    // 9×9 Personal Bests
+    document.getElementById("best9Easy").textContent = formatBestTime(bestTimes["9x9-easy"]);
+    document.getElementById("best9Medium").textContent = formatBestTime(bestTimes["9x9-medium"]);
+    document.getElementById("best9Hard").textContent = formatBestTime(bestTimes["9x9-hard"]);
+    document.getElementById("best9Expert").textContent = formatBestTime(bestTimes["9x9-expert"]);
+}

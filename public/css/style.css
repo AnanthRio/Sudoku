@@ -751,3 +751,111 @@ Remaining cells
 .theme-option:hover {
     background: var(--hover-bg);
 }
+
+.new-best-message {
+    display: none;
+    margin: 10px 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #d89b00;
+}
+
+/* ========================
+    Stats
+======================== */
+
+
+.stats-btn {
+    width: 120px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #555;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.stats-btn:hover {
+    opacity: 0.85;
+}
+
+.stats-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.stats-content {
+    position: relative;
+    width: min(90%, 500px);
+    padding: 28px;
+    background: var(--surface-color);
+    color: var(--text-color);
+    border-radius: 14px;
+    text-align: center;
+}
+
+.stats-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.stats-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 22px 0 28px;
+}
+
+.stat-box {
+    padding: 15px;
+    background: var(--cell-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.stat-box span {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--secondary-text);
+    font-size: 13px;
+}
+
+.stat-box strong {
+    font-size: 22px;
+}
+
+.best-times-table {
+    margin-top: 15px;
+}
+
+.best-header,
+.best-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    padding: 10px 5px;
+}
+
+.best-header {
+    border-bottom: 2px solid var(--border-color);
+}
+
+.best-row {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.best-row span {
+    text-align: left;
+}
