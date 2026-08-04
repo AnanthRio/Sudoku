@@ -91,6 +91,7 @@ nextBtn.addEventListener("click", function () {
 gameBackBtn.addEventListener("click", function () {
 
     pauseTimer();
+    saveGame();
     // Hide game
     gameSection.style.display = "none";
     // Show home controls
@@ -102,13 +103,15 @@ gameBackBtn.addEventListener("click", function () {
 
 continueGameBtn.addEventListener("click", function () {
 
-    // Hide home controls
     homeActions.style.display = "none";
-    // Show existing game
     gameSection.style.display = "block";
 
-    startTimer();
+    // If page was refreshed, restore saved game
+    if (solutionBoard.length === 0) {
+        loadSavedGame();
+    }
 
+    startTimer();
 });
 
 gameOverHomeBtn.addEventListener("click", function () {
@@ -162,4 +165,29 @@ winNewGameBtn.addEventListener("click", function () {
     selectedCell = null;
 
     newGameBtn.click();
+});
+
+window.addEventListener("DOMContentLoaded", function () {
+
+    if (hasSavedGame()) {
+
+        const savedGame = JSON.parse(
+            localStorage.getItem("sudokuSavedGame")
+        );
+
+        // Show Continue
+        continueGameArea.style.display = "block";
+
+        // Show saved time
+        const minutes =
+            Math.floor(savedGame.elapsedSeconds / 60);
+
+        const seconds =
+            savedGame.elapsedSeconds % 60;
+
+        pausedTime.textContent =
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(seconds).padStart(2, "0");
+    }
 });

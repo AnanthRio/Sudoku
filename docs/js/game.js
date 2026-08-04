@@ -178,8 +178,53 @@ function enterNumber(number) {
             gameOver();
         }
     }
+    saveGame();
 }
 
+
+function saveGame() {
+
+    const size = solutionBoard.length;
+    // No active game
+    if (size === 0) {
+        return;
+    }
+
+    const playerAnswers = [];
+
+    for (let row = 0; row < size; row++) {
+        playerAnswers[row] = [];
+        for (let col = 0; col < size; col++) {
+            const cell = document.querySelector(
+                `.sudoku-cell[data-row="${row}"][data-col="${col}"]`
+            );
+
+            if (cell.classList.contains("given-cell")) {
+                playerAnswers[row][col] = null;
+            } else {
+                playerAnswers[row][col] =
+                    cell.textContent === ""
+                        ? 0
+                        : Number(cell.textContent);
+            }
+        }
+    }
+
+    const gameData = {
+        size: size,
+        difficulty: selectedDifficulty,
+        solutionBoard: solutionBoard,
+        puzzleBoard: puzzleBoard,
+        playerAnswers: playerAnswers,
+        mistakes: mistakes,
+        elapsedSeconds: elapsedSeconds
+    };
+
+    localStorage.setItem(
+        "sudokuSavedGame",
+        JSON.stringify(gameData)
+    );
+}
 
 
 // ==========================================
@@ -192,6 +237,7 @@ pauseBtn.addEventListener("click", function () {
         pauseTimer();
 
         isPaused = true;
+        saveGame();
 
         sudokuBoard.classList.add("paused");
         pauseOverlay.style.display = "flex";
@@ -211,6 +257,14 @@ pauseBtn.addEventListener("click", function () {
         eraseBtn.style.visibility = "visible";
         pauseBtn.textContent = "⏸";
     }
+});
+
+window.addEventListener("beforeunload", function () {
+
+    if (solutionBoard.length > 0) {
+        saveGame();
+    }
+
 });
 
 
@@ -266,6 +320,11 @@ function eraseSelectedCell() {
         "correct-cell",
         "wrong-cell"
     );
+    saveGame();
+}
+
+function hasSavedGame() {
+    return localStorage.getItem("sudokuSavedGame") !== null;
 }
 
 eraseBtn.addEventListener("click", function () {
@@ -332,6 +391,140 @@ function selectCell(cell) {
     );
 }
 
+function loadSavedGame() {
+
+    const savedData =
+        localStorage.getItem("sudokuSavedGame");
+
+    if (savedData === null) {
+        return;
+    }
+
+    const savedGame = JSON.parse(savedData);
+
+    // Restore game state
+    solutionBoard = savedGame.solutionBoard;
+    puzzleBoard = savedGame.puzzleBoard;
+    mistakes = savedGame.mistakes;
+    elapsedSeconds = savedGame.elapsedSeconds;
+    selectedDifficulty = savedGame.difficulty;
+    selectedCell = null;
+
+    const size = savedGame.size;
+
+    // Update game information
+    gameMode.textContent =
+        size + "×" + size + " • " +
+        savedGame.difficulty.toUpperCase();
+
+    updateMistakeDisplay();
+    updateTimerDisplay();
+
+    // Rebuild board using SAVED puzzle
+    restoreBoard(
+        size,
+        savedGame.playerAnswers
+    );
+
+    createNumberPad(size);
+}
+
+function restoreBoard(size, playerAnswers) {
+
+    sudokuBoard.innerHTML = "";
+    sudokuBoard.style.gridTemplateColumns =
+        `repeat(${size}, 1fr)`;
+    sudokuBoard.style.gridTemplateRows =
+        `repeat(${size}, 1fr)`;
+
+
+    for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+
+            const cell = document.createElement("div");
+
+            cell.classList.add("sudoku-cell");
+
+            cell.dataset.row = row;
+            cell.dataset.col = col;
+
+            // -------------------------
+            // BOX BORDERS
+            // -------------------------
+            let boxRows;
+            let boxCols;
+
+            if (size === 6) {
+                boxRows = 2;
+                boxCols = 3;
+            } else {
+                boxRows = 3;
+                boxCols = 3;
+            }
+
+            if (
+                (col + 1) % boxCols === 0 &&
+                col !== size - 1
+            ) {
+                cell.classList.add("box-border-right");
+            }
+
+            if (
+                (row + 1) % boxRows === 0 &&
+                row !== size - 1
+            ) {
+                cell.classList.add("box-border-bottom");
+            }
+
+            // -------------------------
+            // GIVEN CELL
+            // -------------------------
+
+            if (puzzleBoard[row][col] !== 0) {
+                cell.textContent =
+                    puzzleBoard[row][col];
+
+                cell.classList.add("given-cell");
+
+            } else {
+
+                // -------------------------
+                // PLAYER CELL
+                // -------------------------
+
+                cell.classList.add("empty-cell");
+
+                const answer =
+                    playerAnswers[row][col];
+
+                if (answer !== 0) {
+                    cell.textContent = answer;
+                    if (
+                        answer ===
+                        solutionBoard[row][col]
+                    ) {
+                        cell.classList.add(
+                            "correct-cell"
+                        );
+                    } else {
+                        cell.classList.add(
+                            "wrong-cell"
+                        );
+                    }
+
+                } else {
+                    cell.textContent = "";
+                }
+
+                cell.addEventListener("click", function () {
+                    selectCell(this);
+                }
+                );
+            }
+            sudokuBoard.appendChild(cell);
+        }
+    }
+}
 
 function highlightRelatedCells(selectedRow, selectedCol) {
 
