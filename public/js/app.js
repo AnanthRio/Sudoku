@@ -55,9 +55,9 @@ closeModalBtn.addEventListener("click", function () {
     newGameModal.style.display = "none";
 });
 
-// =============================
+// ===================
 // BOARD SIZE
-// =============================
+// ===================
 
 boardSizeButtons.forEach(function (button) {
     button.addEventListener("click", function () {
@@ -148,9 +148,9 @@ gameOverNewBtn.addEventListener("click", function () {
 });
 
 
-// ==========================================
+// =======================
 // WIN NAVIGATION
-// ==========================================
+// =======================
 
 winHomeBtn.addEventListener("click", function () {
 

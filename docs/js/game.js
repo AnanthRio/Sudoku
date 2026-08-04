@@ -6,9 +6,9 @@ let selectedCell = null;
 let isPaused = false;
 
 
-// ==========================================
+// =====================
 // GAME ELEMENTS
-// ==========================================
+// =====================
 
 const maxMistakes = 3;
 const gameSection = document.getElementById("gameSection");
@@ -230,9 +230,7 @@ function saveGame() {
 function savePersonalBest() {
 
     const size = solutionBoard.length;
-
-    const key =
-        `${size}x${size}-${selectedDifficulty}`;
+    const key = `${size}x${size}-${selectedDifficulty}`;
 
     const bestTimes =
         JSON.parse(
@@ -259,9 +257,7 @@ function savePersonalBest() {
 function getPersonalBest() {
 
     const size = solutionBoard.length;
-
-    const key =
-        `${size}x${size}-${selectedDifficulty}`;
+    const key = `${size}x${size}-${selectedDifficulty}`;
 
     const bestTimes =
         JSON.parse(
@@ -309,7 +305,6 @@ function recordWin() {
 function recordLoss() {
 
     const stats = getStats();
-
     stats.gamesPlayed++;
     stats.currentStreak = 0;
 
@@ -317,9 +312,9 @@ function recordLoss() {
 }
 
 
-// ==========================================
+// ============================
 // PAUSE / RESUME
-// ==========================================
+// ============================
 
 pauseBtn.addEventListener("click", function () {
     if (!isPaused) {
@@ -360,14 +355,12 @@ window.addEventListener("beforeunload", function () {
 
 function checkGameComplete() {
 
-    const emptyCells =
-        document.querySelectorAll(".empty-cell");
+    const emptyCells = document.querySelectorAll(".empty-cell");
 
     for (let cell of emptyCells) {
         const row = Number(cell.dataset.row);
         const col = Number(cell.dataset.col);
-        const enteredNumber =
-            Number(cell.textContent);
+        const enteredNumber = Number(cell.textContent);
 
         // One cell is empty or wrong
         if (enteredNumber !== solutionBoard[row][col]) {
@@ -392,11 +385,9 @@ function gameWon() {
     winMistakes.textContent =
         `${mistakes}/${maxMistakes}`;
 
-    const bestMinutes =
-        Math.floor(bestTime / 60);
+    const bestMinutes = Math.floor(bestTime / 60);
 
-    const bestSeconds =
-        bestTime % 60;
+    const bestSeconds = bestTime % 60;
 
     winBestTime.textContent =
         String(bestMinutes).padStart(2, "0") +
@@ -424,6 +415,7 @@ function gameOver() {
     // Show modal
     gameOverModal.style.display = "flex";
 }
+
 
 function eraseSelectedCell() {
     if (selectedCell === null) {
@@ -472,7 +464,6 @@ document.addEventListener("keydown", function (event) {
         return;
     }
 
-
     if (key === "Backspace" || key === "Delete") {
         event.preventDefault();
         eraseSelectedCell();
@@ -510,8 +501,7 @@ function selectCell(cell) {
 
 function loadSavedGame() {
 
-    const savedData =
-        localStorage.getItem("sudokuSavedGame");
+    const savedData = localStorage.getItem("sudokuSavedGame");
 
     if (savedData === null) {
         return;
@@ -549,11 +539,8 @@ function loadSavedGame() {
 function restoreBoard(size, playerAnswers) {
 
     sudokuBoard.innerHTML = "";
-    sudokuBoard.style.gridTemplateColumns =
-        `repeat(${size}, 1fr)`;
-    sudokuBoard.style.gridTemplateRows =
-        `repeat(${size}, 1fr)`;
-
+    sudokuBoard.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    sudokuBoard.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
     for (let row = 0; row < size; row++) {
         for (let col = 0; col < size; col++) {
@@ -565,9 +552,9 @@ function restoreBoard(size, playerAnswers) {
             cell.dataset.row = row;
             cell.dataset.col = col;
 
-            // -------------------------
+            // -------------------
             // BOX BORDERS
-            // -------------------------
+            // -------------------
             let boxRows;
             let boxCols;
 
@@ -593,9 +580,9 @@ function restoreBoard(size, playerAnswers) {
                 cell.classList.add("box-border-bottom");
             }
 
-            // -------------------------
+            // ------------------
             // GIVEN CELL
-            // -------------------------
+            // ------------------
 
             if (puzzleBoard[row][col] !== 0) {
                 cell.textContent =
@@ -605,14 +592,13 @@ function restoreBoard(size, playerAnswers) {
 
             } else {
 
-                // -------------------------
+                // ----------------
                 // PLAYER CELL
-                // -------------------------
+                // ----------------
 
                 cell.classList.add("empty-cell");
 
-                const answer =
-                    playerAnswers[row][col];
+                const answer = playerAnswers[row][col];
 
                 if (answer !== 0) {
                     cell.textContent = answer;
@@ -664,17 +650,13 @@ function highlightRelatedCells(selectedRow, selectedCol) {
         boxCols = 3;
     }
 
-    const selectedBoxRow =
-        Math.floor(selectedRow / boxRows);
-
-    const selectedBoxCol =
-        Math.floor(selectedCol / boxCols);
+    const selectedBoxRow = Math.floor(selectedRow / boxRows);
+    const selectedBoxCol = Math.floor(selectedCol / boxCols);
 
     cells.forEach(function (cell) {
 
         const row = Number(cell.dataset.row);
         const col = Number(cell.dataset.col);
-
         const sameRow = row === selectedRow;
         const sameColumn = col === selectedCol;
 

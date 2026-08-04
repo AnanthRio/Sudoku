@@ -55,9 +55,9 @@ closeModalBtn.addEventListener("click", function () {
     newGameModal.style.display = "none";
 });
 
-// =============================
+// ===================
 // BOARD SIZE
-// =============================
+// ===================
 
 boardSizeButtons.forEach(function (button) {
     button.addEventListener("click", function () {
@@ -148,9 +148,9 @@ gameOverNewBtn.addEventListener("click", function () {
 });
 
 
-// ==========================================
+// =======================
 // WIN NAVIGATION
-// ==========================================
+// =======================
 
 winHomeBtn.addEventListener("click", function () {
 
@@ -170,20 +170,16 @@ winNewGameBtn.addEventListener("click", function () {
 
     winModal.style.display = "none";
     gameSection.style.display = "none";
-
     homeActions.style.display = "flex";
     continueGameArea.style.display = "none";
-
     selectedCell = null;
-
     newGameBtn.click();
 });
 
 window.addEventListener("DOMContentLoaded", function () {
 
 
-    const savedColorTheme =
-        localStorage.getItem("sudokuColorTheme");
+    const savedColorTheme = localStorage.getItem("sudokuColorTheme");
 
     if (
         savedColorTheme &&
@@ -197,19 +193,15 @@ window.addEventListener("DOMContentLoaded", function () {
 
     if (hasSavedGame()) {
 
-        const savedGame = JSON.parse(
-            localStorage.getItem("sudokuSavedGame")
+        const savedGame = JSON.parse(localStorage.getItem("sudokuSavedGame")
         );
 
         // Show Continue
         continueGameArea.style.display = "block";
 
         // Show saved time
-        const minutes =
-            Math.floor(savedGame.elapsedSeconds / 60);
-
-        const seconds =
-            savedGame.elapsedSeconds % 60;
+        const minutes = Math.floor(savedGame.elapsedSeconds / 60);
+        const seconds = savedGame.elapsedSeconds % 60;
 
         pausedTime.textContent =
             String(minutes).padStart(2, "0") +
@@ -325,8 +317,7 @@ function updateStatsDisplay() {
         );
     }
 
-    statWinRate.textContent =
-        winRate + "%";
+    statWinRate.textContent = winRate + "%";
 
 
     // 6×6 Personal Bests

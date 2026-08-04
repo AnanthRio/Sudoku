@@ -1,6 +1,6 @@
-// ==========================================
+// ========================
 // SUDOKU GENERATOR
-// ==========================================
+// ========================
 
 function generateSolvedBoard(size) {
     const board = Array.from(
@@ -12,9 +12,9 @@ function generateSolvedBoard(size) {
     return board;
 }
 
-// ==========================================
+// =========================
 // BACKTRACKING
-// ==========================================
+// =========================
 
 function fillBoard(board, size) {
 
@@ -66,14 +66,12 @@ function isValid(board, row, col, number, size) {
         }
     }
 
-
     // Check column
     for (let i = 0; i < size; i++) {
         if (board[i][col] === number) {
             return false;
         }
     }
-
 
     // Box dimensions
     let boxRows;
@@ -89,11 +87,8 @@ function isValid(board, row, col, number, size) {
 
 
     // Find starting position of box
-    const startRow =
-        Math.floor(row / boxRows) * boxRows;
-    const startCol =
-        Math.floor(col / boxCols) * boxCols;
-
+    const startRow = Math.floor(row / boxRows) * boxRows;
+    const startCol = Math.floor(col / boxCols) * boxCols;
 
     // Check box
     for (let r = 0; r < boxRows; r++) {
@@ -109,9 +104,9 @@ function isValid(board, row, col, number, size) {
 }
 
 
-// ==========================================
+// =======================
 // SHUFFLE ARRAY
-// ==========================================
+// =======================
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -187,9 +182,9 @@ function createPuzzle(solutionBoard, size, difficulty) {
         return [...row];
     });
 
-    // =========================
+    // =================
     // DIFFICULTY
-    // =========================
+    // =================
 
     let removePercent;
     switch (difficulty) {
@@ -210,8 +205,7 @@ function createPuzzle(solutionBoard, size, difficulty) {
     }
 
     const totalCells = size * size;
-    const targetRemovals =
-        Math.floor(totalCells * removePercent);
+    const targetRemovals = Math.floor(totalCells * removePercent);
 
 
     // =========================
@@ -230,9 +224,9 @@ function createPuzzle(solutionBoard, size, difficulty) {
 
     shuffle(positions);
 
-    // =========================
+    // ====================
     // REMOVE NUMBERS
-    // =========================
+    // ====================
 
     let removed = 0;
 
@@ -254,8 +248,7 @@ function createPuzzle(solutionBoard, size, difficulty) {
             return [...row];
         });
 
-        const solutions =
-            countSolutions(testBoard, size);
+        const solutions = countSolutions(testBoard, size);
 
         if (solutions === 1) {
             // Safe removal
@@ -266,7 +259,6 @@ function createPuzzle(solutionBoard, size, difficulty) {
             puzzle[row][col] = backup;
         }
     }
-
 
     return puzzle;
 }

@@ -6,9 +6,9 @@ let selectedCell = null;
 let isPaused = false;
 
 
-// ==========================================
+// =====================
 // GAME ELEMENTS
-// ==========================================
+// =====================
 
 const maxMistakes = 3;
 const gameSection = document.getElementById("gameSection");
@@ -230,9 +230,7 @@ function saveGame() {
 function savePersonalBest() {
 
     const size = solutionBoard.length;
-
-    const key =
-        `${size}x${size}-${selectedDifficulty}`;
+    const key = `${size}x${size}-${selectedDifficulty}`;
 
     const bestTimes =
         JSON.parse(
@@ -259,9 +257,7 @@ function savePersonalBest() {
 function getPersonalBest() {
 
     const size = solutionBoard.length;
-
-    const key =
-        `${size}x${size}-${selectedDifficulty}`;
+    const key = `${size}x${size}-${selectedDifficulty}`;
 
     const bestTimes =
         JSON.parse(
@@ -309,7 +305,6 @@ function recordWin() {
 function recordLoss() {
 
     const stats = getStats();
-
     stats.gamesPlayed++;
     stats.currentStreak = 0;
 
@@ -317,9 +312,9 @@ function recordLoss() {
 }
 
 
-// ==========================================
+// ============================
 // PAUSE / RESUME
-// ==========================================
+// ============================
 
 pauseBtn.addEventListener("click", function () {
     if (!isPaused) {
@@ -360,14 +355,12 @@ window.addEventListener("beforeunload", function () {
 
 function checkGameComplete() {
 
-    const emptyCells =
-        document.querySelectorAll(".empty-cell");
+    const emptyCells = document.querySelectorAll(".empty-cell");
 
     for (let cell of emptyCells) {
         const row = Number(cell.dataset.row);
         const col = Number(cell.dataset.col);
-        const enteredNumber =
-            Number(cell.textContent);
+        const enteredNumber = Number(cell.textContent);
 
         // One cell is empty or wrong
         if (enteredNumber !== solutionBoard[row][col]) {
@@ -423,6 +416,7 @@ function gameOver() {
     gameOverModal.style.display = "flex";
 }
 
+
 function eraseSelectedCell() {
     if (selectedCell === null) {
         return;
@@ -469,7 +463,6 @@ document.addEventListener("keydown", function (event) {
         }
         return;
     }
-
 
     if (key === "Backspace" || key === "Delete") {
         event.preventDefault();
@@ -559,9 +552,9 @@ function restoreBoard(size, playerAnswers) {
             cell.dataset.row = row;
             cell.dataset.col = col;
 
-            // -------------------------
+            // -------------------
             // BOX BORDERS
-            // -------------------------
+            // -------------------
             let boxRows;
             let boxCols;
 
@@ -587,9 +580,9 @@ function restoreBoard(size, playerAnswers) {
                 cell.classList.add("box-border-bottom");
             }
 
-            // -------------------------
+            // ------------------
             // GIVEN CELL
-            // -------------------------
+            // ------------------
 
             if (puzzleBoard[row][col] !== 0) {
                 cell.textContent =
@@ -599,9 +592,9 @@ function restoreBoard(size, playerAnswers) {
 
             } else {
 
-                // -------------------------
+                // ----------------
                 // PLAYER CELL
-                // -------------------------
+                // ----------------
 
                 cell.classList.add("empty-cell");
 

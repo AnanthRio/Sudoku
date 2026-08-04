@@ -1,6 +1,6 @@
-// ==========================================
+// ========================
 // SUDOKU GENERATOR
-// ==========================================
+// ========================
 
 function generateSolvedBoard(size) {
     const board = Array.from(
@@ -12,9 +12,9 @@ function generateSolvedBoard(size) {
     return board;
 }
 
-// ==========================================
+// =========================
 // BACKTRACKING
-// ==========================================
+// =========================
 
 function fillBoard(board, size) {
 
@@ -104,9 +104,9 @@ function isValid(board, row, col, number, size) {
 }
 
 
-// ==========================================
+// =======================
 // SHUFFLE ARRAY
-// ==========================================
+// =======================
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -182,9 +182,9 @@ function createPuzzle(solutionBoard, size, difficulty) {
         return [...row];
     });
 
-    // =========================
+    // =================
     // DIFFICULTY
-    // =========================
+    // =================
 
     let removePercent;
     switch (difficulty) {
@@ -224,9 +224,9 @@ function createPuzzle(solutionBoard, size, difficulty) {
 
     shuffle(positions);
 
-    // =========================
+    // ====================
     // REMOVE NUMBERS
-    // =========================
+    // ====================
 
     let removed = 0;
 
