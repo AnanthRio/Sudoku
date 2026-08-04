@@ -392,11 +392,9 @@ function gameWon() {
     winMistakes.textContent =
         `${mistakes}/${maxMistakes}`;
 
-    const bestMinutes =
-        Math.floor(bestTime / 60);
+    const bestMinutes = Math.floor(bestTime / 60);
 
-    const bestSeconds =
-        bestTime % 60;
+    const bestSeconds = bestTime % 60;
 
     winBestTime.textContent =
         String(bestMinutes).padStart(2, "0") +
@@ -510,8 +508,7 @@ function selectCell(cell) {
 
 function loadSavedGame() {
 
-    const savedData =
-        localStorage.getItem("sudokuSavedGame");
+    const savedData = localStorage.getItem("sudokuSavedGame");
 
     if (savedData === null) {
         return;
@@ -549,11 +546,8 @@ function loadSavedGame() {
 function restoreBoard(size, playerAnswers) {
 
     sudokuBoard.innerHTML = "";
-    sudokuBoard.style.gridTemplateColumns =
-        `repeat(${size}, 1fr)`;
-    sudokuBoard.style.gridTemplateRows =
-        `repeat(${size}, 1fr)`;
-
+    sudokuBoard.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    sudokuBoard.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
     for (let row = 0; row < size; row++) {
         for (let col = 0; col < size; col++) {
@@ -611,8 +605,7 @@ function restoreBoard(size, playerAnswers) {
 
                 cell.classList.add("empty-cell");
 
-                const answer =
-                    playerAnswers[row][col];
+                const answer = playerAnswers[row][col];
 
                 if (answer !== 0) {
                     cell.textContent = answer;
@@ -664,17 +657,13 @@ function highlightRelatedCells(selectedRow, selectedCol) {
         boxCols = 3;
     }
 
-    const selectedBoxRow =
-        Math.floor(selectedRow / boxRows);
-
-    const selectedBoxCol =
-        Math.floor(selectedCol / boxCols);
+    const selectedBoxRow = Math.floor(selectedRow / boxRows);
+    const selectedBoxCol = Math.floor(selectedCol / boxCols);
 
     cells.forEach(function (cell) {
 
         const row = Number(cell.dataset.row);
         const col = Number(cell.dataset.col);
-
         const sameRow = row === selectedRow;
         const sameColumn = col === selectedCol;
 

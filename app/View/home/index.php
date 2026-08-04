@@ -265,78 +265,77 @@
     <!-- Stats Modal -->
     <div id="statsModal" class="stats-modal">
 
-    <div class="stats-content">
+        <div class="stats-content">
 
-        <button id="closeStatsBtn"
-                class="stats-close-btn">
-            ×
-        </button>
+            <button id="closeStatsBtn" class="stats-close-btn">
+                ×
+            </button>
 
-        <h2>📊 Statistics</h2>
+            <h2>📊 Statistics</h2>
 
-        <div class="stats-summary">
+            <div class="stats-summary">
 
-            <div class="stat-box">
-                <span>Games Played</span>
-                <strong id="statGamesPlayed">0</strong>
+                <div class="stat-box">
+                    <span>Games Played</span>
+                    <strong id="statGamesPlayed">0</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Games Won</span>
+                    <strong id="statGamesWon">0</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Win Rate</span>
+                    <strong id="statWinRate">0%</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Best Streak</span>
+                    <strong id="statBestStreak">0</strong>
+                </div>
+
             </div>
 
-            <div class="stat-box">
-                <span>Games Won</span>
-                <strong id="statGamesWon">0</strong>
-            </div>
+            <h3>🏆 Personal Bests</h3>
 
-            <div class="stat-box">
-                <span>Win Rate</span>
-                <strong id="statWinRate">0%</strong>
-            </div>
+            <div class="best-times-table">
 
-            <div class="stat-box">
-                <span>Best Streak</span>
-                <strong id="statBestStreak">0</strong>
-            </div>
+                <div class="best-header">
+                    <span></span>
+                    <strong>6×6</strong>
+                    <strong>9×9</strong>
+                </div>
 
-        </div>
+                <div class="best-row">
+                    <span>Easy</span>
+                    <strong id="best6Easy">--:--</strong>
+                    <strong id="best9Easy">--:--</strong>
+                </div>
 
-        <h3>🏆 Personal Bests</h3>
+                <div class="best-row">
+                    <span>Medium</span>
+                    <strong id="best6Medium">--:--</strong>
+                    <strong id="best9Medium">--:--</strong>
+                </div>
 
-        <div class="best-times-table">
+                <div class="best-row">
+                    <span>Hard</span>
+                    <strong id="best6Hard">--:--</strong>
+                    <strong id="best9Hard">--:--</strong>
+                </div>
 
-            <div class="best-header">
-                <span></span>
-                <strong>6×6</strong>
-                <strong>9×9</strong>
-            </div>
+                <div class="best-row">
+                    <span>Expert</span>
+                    <strong id="best6Expert">--:--</strong>
+                    <strong id="best9Expert">--:--</strong>
+                </div>
 
-            <div class="best-row">
-                <span>Easy</span>
-                <strong id="best6Easy">--:--</strong>
-                <strong id="best9Easy">--:--</strong>
-            </div>
-
-            <div class="best-row">
-                <span>Medium</span>
-                <strong id="best6Medium">--:--</strong>
-                <strong id="best9Medium">--:--</strong>
-            </div>
-
-            <div class="best-row">
-                <span>Hard</span>
-                <strong id="best6Hard">--:--</strong>
-                <strong id="best9Hard">--:--</strong>
-            </div>
-
-            <div class="best-row">
-                <span>Expert</span>
-                <strong id="best6Expert">--:--</strong>
-                <strong id="best9Expert">--:--</strong>
             </div>
 
         </div>
 
     </div>
-
-</div>
 
     <script src="js/sudoku.js"></script>
     <script src="js/timer.js"></script>
