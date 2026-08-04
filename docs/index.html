@@ -82,7 +82,7 @@
                 <ul>
                     <li>No repeated numbers in a row.</li>
                     <li>No repeated numbers in a column.</li>
-                    <li id="boxRule">No repeated numbers in each 2×3 box.</li>
+                    <li id="boxRule">No repeated numbers in each 2×3 box and 3×3 box.</li>
                     <li>You can make up to 3 mistakes.</li>
                 </ul>
 
