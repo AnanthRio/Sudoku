@@ -499,6 +499,10 @@ Remaining cells
     font-weight: 700;
 }
 
+.same-number-cell {
+    background-color: var(--related-bg) !important;
+}
+
 /* =========================
    Pause Button 
 ========================= */

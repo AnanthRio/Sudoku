@@ -79,17 +79,30 @@ function createBoard(size, difficulty) {
             }
 
             if (puzzleBoard[row][col] !== 0) {
-                // Given number
+
                 cell.textContent = puzzleBoard[row][col];
                 cell.classList.add("given-cell");
+
             } else {
-                // Empty playable cell
+
                 cell.textContent = "";
                 cell.classList.add("empty-cell");
-                cell.addEventListener("click", function () {
-                    selectCell(this);
-                });
             }
+
+
+            // ALL cells can now be selected
+            cell.addEventListener("click", function () {
+
+                if (selectedCell !== null) {
+                    selectedCell.classList.remove("selected-cell");
+                }
+
+                selectedCell = this;
+                selectedCell.classList.add("selected-cell");
+
+                highlightSameNumbers(this.textContent);
+            });
+
 
             sudokuBoard.appendChild(cell);
         }
@@ -370,6 +383,32 @@ function checkGameComplete() {
     return true;
 }
 
+function highlightSameNumbers(number) {
+
+    // Remove previous highlights
+    document
+        .querySelectorAll(".same-number-cell")
+        .forEach(function (cell) {
+            cell.classList.remove("same-number-cell");
+        });
+
+    // Nothing to highlight
+    if (!number) {
+        return;
+    }
+
+    const cells =
+        document.querySelectorAll(".sudoku-cell");
+
+    cells.forEach(function (cell) {
+
+        if (cell.textContent === String(number)) {
+            cell.classList.add("same-number-cell");
+        }
+
+    });
+}
+
 function gameWon() {
 
     pauseTimer();
@@ -400,7 +439,7 @@ function gameWon() {
         newBestMessage.style.display = "none";
     }
 
-        launchConfetti();
+    launchConfetti();
     winModal.style.display = "flex";
 }
 
@@ -425,9 +464,9 @@ function launchConfetti() {
         // Random color
         confetti.style.backgroundColor =
             colors[
-                Math.floor(
-                    Math.random() * colors.length
-                )
+            Math.floor(
+                Math.random() * colors.length
+            )
             ];
 
         // Slightly different falling speeds
