@@ -400,7 +400,54 @@ function gameWon() {
         newBestMessage.style.display = "none";
     }
 
+        launchConfetti();
     winModal.style.display = "flex";
+}
+
+function launchConfetti() {
+
+    const colors = [
+        "#ff4757",
+        "#ffa502",
+        "#2ed573",
+        "#1e90ff",
+        "#a55eea",
+        "#ff6b81"
+    ];
+
+    for (let i = 0; i < 100; i++) {
+
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        // Random horizontal position
+        confetti.style.left = Math.random() * 100 + "vw";
+
+        // Random color
+        confetti.style.backgroundColor =
+            colors[
+                Math.floor(
+                    Math.random() * colors.length
+                )
+            ];
+
+        // Slightly different falling speeds
+        confetti.style.animationDuration = (2 + Math.random() * 2) + "s";
+
+        // Don't make everything start together
+        confetti.style.animationDelay = (Math.random() * 0.7) + "s";
+
+        // Random size
+        const size = 6 + Math.random() * 7;
+        confetti.style.width = size + "px";
+        confetti.style.height = size * 1.5 + "px";
+
+        document.body.appendChild(confetti);
+
+        // Clean it up afterwards
+        setTimeout(function () {
+            confetti.remove();
+        }, 5000);
+    }
 }
 
 

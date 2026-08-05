@@ -28,10 +28,8 @@ const statGamesWon = document.getElementById("statGamesWon");
 const statWinRate = document.getElementById("statWinRate");
 const statBestStreak = document.getElementById("statBestStreak");
 
-
 let selectedDifficulty = null;
 let selectedBoardSize = null;
-
 
 // Open modal
 newGameBtn.addEventListener("click", function () {
@@ -156,7 +154,6 @@ winHomeBtn.addEventListener("click", function () {
 
     winModal.style.display = "none";
     gameSection.style.display = "none";
-
     homeActions.style.display = "flex";
 
     // Finished game cannot be continued
@@ -177,7 +174,6 @@ winNewGameBtn.addEventListener("click", function () {
 });
 
 window.addEventListener("DOMContentLoaded", function () {
-
 
     const savedColorTheme = localStorage.getItem("sudokuColorTheme");
 
