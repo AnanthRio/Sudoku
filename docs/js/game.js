@@ -170,6 +170,7 @@ function enterNumber(number) {
     const col = Number(selectedCell.dataset.col);
     // Show entered number
     selectedCell.textContent = number;
+    highlightSameNumbers(number);
     // Remove previous result color
     selectedCell.classList.remove(
         "correct-cell",
@@ -511,6 +512,7 @@ function eraseSelectedCell() {
         return;
     }
     selectedCell.textContent = "";
+    highlightSameNumbers(null);
     selectedCell.classList.remove(
         "correct-cell",
         "wrong-cell"
