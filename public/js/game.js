@@ -42,11 +42,7 @@ function createBoard(size, difficulty) {
     solutionBoard = generateSolvedBoard(size);
 
     // Puzzle shown to player
-    puzzleBoard = createPuzzle(
-        solutionBoard,
-        size,
-        difficulty
-    );
+    puzzleBoard = createPuzzle(solutionBoard,size,difficulty);
 
 
     for (let row = 0; row < size; row++) {
@@ -79,12 +75,10 @@ function createBoard(size, difficulty) {
             }
 
             if (puzzleBoard[row][col] !== 0) {
-
                 cell.textContent = puzzleBoard[row][col];
                 cell.classList.add("given-cell");
 
             } else {
-
                 cell.textContent = "";
                 cell.classList.add("empty-cell");
             }
@@ -99,11 +93,8 @@ function createBoard(size, difficulty) {
 
                 selectedCell = this;
                 selectedCell.classList.add("selected-cell");
-
                 highlightSameNumbers(this.textContent);
             });
-
-
             sudokuBoard.appendChild(cell);
         }
     }
@@ -123,8 +114,7 @@ function startGame(size, difficulty) {
     eraseBtn.style.visibility = "visible";
     pauseBtn.textContent = "⏸";
 
-    gameMode.textContent =
-        size + "×" + size + " • " + difficulty.toUpperCase();
+    gameMode.textContent = size + "×" + size + " • " + difficulty.toUpperCase();
 
     createBoard(size, difficulty);
 
@@ -387,8 +377,7 @@ function checkGameComplete() {
 function highlightSameNumbers(number) {
 
     // Remove previous highlights
-    document
-        .querySelectorAll(".same-number-cell")
+    document.querySelectorAll(".same-number-cell")
         .forEach(function (cell) {
             cell.classList.remove("same-number-cell");
         });
@@ -398,8 +387,7 @@ function highlightSameNumbers(number) {
         return;
     }
 
-    const cells =
-        document.querySelectorAll(".sudoku-cell");
+    const cells = document.querySelectorAll(".sudoku-cell");
 
     cells.forEach(function (cell) {
 
@@ -422,8 +410,7 @@ function gameWon() {
 
     winTime.textContent = gameTimer.textContent;
 
-    winMistakes.textContent =
-        `${mistakes}/${maxMistakes}`;
+    winMistakes.textContent = `${mistakes}/${maxMistakes}`;
 
     const bestMinutes = Math.floor(bestTime / 60);
 

@@ -189,8 +189,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     if (hasSavedGame()) {
 
-        const savedGame = JSON.parse(localStorage.getItem("sudokuSavedGame")
-        );
+        const savedGame = JSON.parse(localStorage.getItem("sudokuSavedGame"));
 
         // Show Continue
         continueGameArea.style.display = "block";
