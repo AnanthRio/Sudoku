@@ -452,9 +452,7 @@ function launchConfetti() {
         // Random color
         confetti.style.backgroundColor =
             colors[
-            Math.floor(
-                Math.random() * colors.length
-            )
+            Math.floor(Math.random() * colors.length)
             ];
 
         // Slightly different falling speeds
@@ -467,7 +465,6 @@ function launchConfetti() {
         const size = 6 + Math.random() * 7;
         confetti.style.width = size + "px";
         confetti.style.height = size * 1.5 + "px";
-
         document.body.appendChild(confetti);
 
         // Clean it up afterwards
@@ -500,10 +497,7 @@ function eraseSelectedCell() {
     }
     selectedCell.textContent = "";
     highlightSameNumbers(null);
-    selectedCell.classList.remove(
-        "correct-cell",
-        "wrong-cell"
-    );
+    selectedCell.classList.remove("correct-cell","wrong-cell");
     saveGame();
 }
 
