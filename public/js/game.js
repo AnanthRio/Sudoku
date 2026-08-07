@@ -307,7 +307,10 @@ function enterNumber(number) {
         return;
     }
 
-    if (selectedCell.classList.contains("given-cell")) {
+    if (
+        selectedCell.classList.contains("given-cell") ||
+        selectedCell.classList.contains("correct-cell")
+    ) {
         return;
     }
 
@@ -651,7 +654,10 @@ function eraseSelectedCell() {
     if (selectedCell === null) {
         return;
     }
-    if (selectedCell.classList.contains("given-cell")) {
+    if (
+        selectedCell.classList.contains("given-cell") ||
+        selectedCell.classList.contains("correct-cell")
+    ) {
         return;
     }
     selectedCell.textContent = "";
