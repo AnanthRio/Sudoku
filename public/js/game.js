@@ -42,7 +42,7 @@ function createBoard(size, difficulty) {
     solutionBoard = generateSolvedBoard(size);
 
     // Puzzle shown to player
-    puzzleBoard = createPuzzle(solutionBoard,size,difficulty);
+    puzzleBoard = createPuzzle(solutionBoard, size, difficulty);
 
 
     for (let row = 0; row < size; row++) {
@@ -139,10 +139,48 @@ function createNumberPad(size) {
         const button = document.createElement("button");
         button.classList.add("number-btn");
         button.textContent = number;
+
+        button.dataset.number = number;
+
         button.addEventListener("click", function () {
             enterNumber(number);
         });
         numberPad.appendChild(button);
+    }
+}
+
+function updateCompletedNumbers() {
+
+    const size = solutionBoard.length;
+
+    for (let number = 1; number <= size; number++) {
+
+        let correctCount = 0;
+
+        const cells = document.querySelectorAll(".sudoku-cell");
+
+        cells.forEach(function (cell) {
+
+            const row = Number(cell.dataset.row);
+            const col = Number(cell.dataset.col);
+
+            if (
+                Number(cell.textContent) === number &&
+                solutionBoard[row][col] === number
+            ) {
+                correctCount++;
+            }
+        });
+
+        const button = document.querySelector(`.number-btn[data-number="${number}"]`);
+
+        if (correctCount === size) {
+            button.classList.add("completed-number");
+            button.disabled = true;
+        } else {
+            button.classList.remove("completed-number");
+            button.disabled = false;
+        }
     }
 }
 
@@ -183,6 +221,7 @@ function enterNumber(number) {
             gameOver();
         }
     }
+    updateCompletedNumbers();
     saveGame();
 }
 
@@ -497,7 +536,7 @@ function eraseSelectedCell() {
     }
     selectedCell.textContent = "";
     highlightSameNumbers(null);
-    selectedCell.classList.remove("correct-cell","wrong-cell");
+    selectedCell.classList.remove("correct-cell", "wrong-cell");
     saveGame();
 }
 
@@ -603,6 +642,7 @@ function loadSavedGame() {
     );
 
     createNumberPad(size);
+    updateCompletedNumbers();
 }
 
 function restoreBoard(size, playerAnswers) {

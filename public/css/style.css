@@ -452,6 +452,12 @@ body.dark-mode[data-theme="orange"] {
     background: var(--hover-bg);
 }
 
+.number-btn.completed-number {
+    opacity: 0.25;
+    transform: scale(0.9);
+    cursor: default;
+}
+
 
 /* ================
 Remaining cells 
