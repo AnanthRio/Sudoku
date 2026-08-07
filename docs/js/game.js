@@ -86,7 +86,6 @@ function createBoard(size, difficulty) {
 
             cell.addEventListener("click", function () {
                 selectCell(this);
-                highlightSameNumbers(this.textContent);
             });
             sudokuBoard.appendChild(cell);
         }
@@ -704,12 +703,10 @@ function launchBestConfetti() {
             ];
 
         // Different falling speeds
-        confetti.style.animationDuration =
-            (2 + Math.random() * 2) + "s";
+        confetti.style.animationDuration = (2 + Math.random() * 2) + "s";
 
         // Don't start everything together
-        confetti.style.animationDelay =
-            (Math.random() * 0.7) + "s";
+        confetti.style.animationDelay = (Math.random() * 0.7) + "s";
 
         // Random size
         const size = 7 + Math.random() * 8;
@@ -817,12 +814,35 @@ function selectCell(cell) {
     selectedCell = cell;
     selectedCell.classList.add("selected-cell");
 
-    highlightRelatedCells(
-        Number(selectedCell.dataset.row),
-        Number(selectedCell.dataset.col)
-    );
-}
+    const row = Number(selectedCell.dataset.row);
+    const col = Number(selectedCell.dataset.col);
+    const number = selectedCell.textContent;
 
+    // Clear previous related-cell highlights
+    document.querySelectorAll(".related-cell")
+        .forEach(function (cell) {
+            cell.classList.remove("related-cell");
+        });
+
+    // Clear previous same-number highlights
+    document.querySelectorAll(".same-number-cell")
+        .forEach(function (cell) {
+            cell.classList.remove("same-number-cell");
+        });
+
+    if (number === "") {
+
+        // EMPTY CELL
+        // Highlight row + column + box
+        highlightRelatedCells(row, col);
+
+    } else {
+
+        // CELL WITH NUMBER
+        // Highlight only matching numbers
+        highlightSameNumbers(number);
+    }
+}
 function loadSavedGame() {
 
     const savedData = localStorage.getItem("sudokuSavedGame");
@@ -946,7 +966,6 @@ function restoreBoard(size, playerAnswers) {
 
                 cell.addEventListener("click", function () {
                     selectCell(this);
-                    highlightSameNumbers(this.textContent);
                 });
             }
             sudokuBoard.appendChild(cell);
