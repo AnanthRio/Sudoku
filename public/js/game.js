@@ -184,6 +184,123 @@ function updateCompletedNumbers() {
     }
 }
 
+
+function checkCompletedSections(row, col) {
+    const size = solutionBoard.length;
+
+    // -------------------------
+    // CHECK ROW
+    // -------------------------
+    let rowComplete = true;
+
+    for (let c = 0; c < size; c++) {
+        const cell = document.querySelector(
+            `.sudoku-cell[data-row="${row}"][data-col="${c}"]`
+        );
+
+        if (Number(cell.textContent) !== solutionBoard[row][c]) {
+            rowComplete = false;
+            break;
+        }
+    }
+
+    if (rowComplete) {
+        animateWave(
+            Array.from(
+                document.querySelectorAll(
+                    `.sudoku-cell[data-row="${row}"]`
+                )
+            )
+        );
+    }
+
+
+    // -------------------------
+    // CHECK COLUMN
+    // -------------------------
+    let colComplete = true;
+
+    for (let r = 0; r < size; r++) {
+        const cell = document.querySelector(
+            `.sudoku-cell[data-row="${r}"][data-col="${col}"]`
+        );
+
+        if (Number(cell.textContent) !== solutionBoard[r][col]) {
+            colComplete = false;
+            break;
+        }
+    }
+
+    if (colComplete) {
+        const columnCells = [];
+        for (let r = 0; r < size; r++) {
+            columnCells.push(
+                document.querySelector(
+                    `.sudoku-cell[data-row="${r}"][data-col="${col}"]`
+                )
+            );
+        }
+
+        animateWave(columnCells);
+    }
+
+    // -------------------------
+    // CHECK BOX
+    // -------------------------
+
+    let boxRows;
+    let boxCols;
+
+    if (size === 6) {
+        boxRows = 2;
+        boxCols = 3;
+    } else {
+        boxRows = 3;
+        boxCols = 3;
+    }
+
+    const startRow = Math.floor(row / boxRows) * boxRows;
+    const startCol = Math.floor(col / boxCols) * boxCols;
+
+    const boxCells = [];
+    let boxComplete = true;
+
+    for (let r = startRow; r < startRow + boxRows; r++) {
+        for (let c = startCol; c < startCol + boxCols; c++) {
+
+            const cell = document.querySelector(
+                `.sudoku-cell[data-row="${r}"][data-col="${c}"]`
+            );
+
+            boxCells.push(cell);
+
+            if (Number(cell.textContent) !== solutionBoard[r][c]) {
+                boxComplete = false;
+            }
+        }
+    }
+
+    if (boxComplete) {
+        animateWave(boxCells);
+    }
+}
+
+function animateWave(cells) {
+
+    cells.forEach(function (cell, index) {
+        setTimeout(function () {
+            cell.classList.add("completion-wave");
+
+            setTimeout(function () {
+                cell.classList.remove("completion-wave");
+            }, 350);
+
+        }, index * 60);
+
+    });
+}
+
+
 function enterNumber(number) {
     // Player hasn't selected a cell
     if (selectedCell === null) {
@@ -208,6 +325,9 @@ function enterNumber(number) {
     // Compare against hidden solution
     if (number === solutionBoard[row][col]) {
         selectedCell.classList.add("correct-cell");
+
+        checkCompletedSections(row, col);
+
         // Check whether this was the final answer
         if (checkGameComplete()) {
             gameWon();

@@ -900,3 +900,23 @@ Remaining cells
         opacity: 0;
     }
 }
+
+.sudoku-cell.completion-wave {
+    animation: completionWave 0.35s ease;
+}
+
+@keyframes completionWave {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+        background-color: #8be9a8;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
