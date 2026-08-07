@@ -132,6 +132,24 @@ function updateMistakeDisplay() {
         `Mistakes: ${mistakes}/${maxMistakes}`;
 }
 
+function animateMistake() {
+
+    // Restart animation even if mistakes happen quickly
+    selectedCell.classList.remove("wrong-shake");
+    mistakeDisplay.classList.remove("mistake-pulse");
+
+    void selectedCell.offsetWidth;
+    void mistakeDisplay.offsetWidth;
+
+    selectedCell.classList.add("wrong-shake");
+    mistakeDisplay.classList.add("mistake-pulse");
+
+    setTimeout(function () {
+        selectedCell.classList.remove("wrong-shake");
+        mistakeDisplay.classList.remove("mistake-pulse");
+    }, 400);
+}
+
 
 function createNumberPad(size) {
     numberPad.innerHTML = "";
@@ -302,11 +320,14 @@ function animateWave(cells) {
 
 
 function enterNumber(number) {
+
     // Player hasn't selected a cell
     if (selectedCell === null) {
         return;
     }
 
+    // Don't allow editing given cells
+    // or correctly completed cells
     if (
         selectedCell.classList.contains("given-cell") ||
         selectedCell.classList.contains("correct-cell")
@@ -316,9 +337,12 @@ function enterNumber(number) {
 
     const row = Number(selectedCell.dataset.row);
     const col = Number(selectedCell.dataset.col);
+
     // Show entered number
     selectedCell.textContent = number;
+
     highlightSameNumbers(number);
+
     // Remove previous result color
     selectedCell.classList.remove(
         "correct-cell",
@@ -327,8 +351,11 @@ function enterNumber(number) {
 
     // Compare against hidden solution
     if (number === solutionBoard[row][col]) {
+
+        // Correct answer
         selectedCell.classList.add("correct-cell");
 
+        // Check if row / column / box was completed
         checkCompletedSections(row, col);
 
         // Check whether this was the final answer
@@ -337,14 +364,26 @@ function enterNumber(number) {
         }
 
     } else {
+
+        // Wrong answer
         selectedCell.classList.add("wrong-cell");
+
         mistakes++;
         updateMistakeDisplay();
+
+        // Shake cell + pulse mistake counter
+        animateMistake();
+
+        // Maximum mistakes reached
         if (mistakes >= maxMistakes) {
             gameOver();
         }
     }
+
+    // Fade/disable numbers that are fully completed
     updateCompletedNumbers();
+
+    // Save current game state
     saveGame();
 }
 

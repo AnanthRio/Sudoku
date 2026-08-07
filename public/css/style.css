@@ -920,3 +920,41 @@ Remaining cells
         transform: scale(1);
     }
 }
+
+/* ====================== 
+    Wrong number shake
+====================== */
+.wrong-shake {
+    animation: wrongShake 0.3s ease;
+}
+
+@keyframes wrongShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-4px);
+    }
+    50% {
+        transform: translateX(4px);
+    }
+    75% {
+        transform: translateX(-2px);
+    }
+}
+
+
+/* Mistake counter pulse */
+.mistake-pulse {
+    animation: mistakePulse 0.4s ease;
+}
+
+@keyframes mistakePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+        color: #ff4757;
+    }
+}
