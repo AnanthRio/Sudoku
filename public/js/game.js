@@ -520,7 +520,7 @@ function recordLoss() {
 
 pauseBtn.addEventListener("click", function () {
     if (!isPaused) {
-        // PAUSE
+        // pause
         pauseTimer();
 
         isPaused = true;
@@ -534,7 +534,7 @@ pauseBtn.addEventListener("click", function () {
 
     } else {
 
-        // RESUME
+        // Resume
         startTimer();
         isPaused = false;
 
