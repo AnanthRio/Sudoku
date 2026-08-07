@@ -332,6 +332,11 @@ function enterNumber(number) {
 
     // Show entered number
     selectedCell.textContent = number;
+    document.querySelectorAll(".related-cell")
+    .forEach(function (cell) {
+        cell.classList.remove("related-cell");
+    });
+
 
     highlightSameNumbers(number);
 
