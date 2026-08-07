@@ -84,15 +84,8 @@ function createBoard(size, difficulty) {
             }
 
 
-            // ALL cells can now be selected
             cell.addEventListener("click", function () {
-
-                if (selectedCell !== null) {
-                    selectedCell.classList.remove("selected-cell");
-                }
-
-                selectedCell = this;
-                selectedCell.classList.add("selected-cell");
+                selectCell(this);
                 highlightSameNumbers(this.textContent);
             });
             sudokuBoard.appendChild(cell);
@@ -262,9 +255,9 @@ function checkCompletedSections(row, col) {
         animateWave(columnCells);
     }
 
-    // -------------------------
-    // CHECK BOX
-    // -------------------------
+    // -----------------------
+    // Check Box
+    // -----------------------
 
     let boxRows;
     let boxCols;
@@ -623,12 +616,20 @@ function gameWon() {
         String(bestSeconds).padStart(2, "0");
 
     if (isNewBest) {
+
         newBestMessage.style.display = "block";
+
+        // Special gold celebration for personal best
+        launchBestConfetti();
+
     } else {
+
         newBestMessage.style.display = "none";
+
+        // Normal celebration
+        launchConfetti();
     }
 
-    launchConfetti();
     winModal.style.display = "flex";
 }
 
@@ -669,6 +670,56 @@ function launchConfetti() {
         document.body.appendChild(confetti);
 
         // Clean it up afterwards
+        setTimeout(function () {
+            confetti.remove();
+        }, 5000);
+    }
+}
+
+
+function launchBestConfetti() {
+
+    const colors = [
+        "#FFD700", // gold
+        "#FFC107", // amber
+        "#FFEB3B", // yellow
+        "#FFF3B0", // light gold
+        "#FFFFFF"  // white sparkle
+    ];
+
+    // More confetti than a normal win
+    for (let i = 0; i < 160; i++) {
+
+        const confetti = document.createElement("div");
+
+        confetti.classList.add("confetti");
+
+        // Random horizontal position
+        confetti.style.left = Math.random() * 100 + "vw";
+
+        // Gold-family random color
+        confetti.style.backgroundColor =
+            colors[
+                Math.floor(Math.random() * colors.length)
+            ];
+
+        // Different falling speeds
+        confetti.style.animationDuration =
+            (2 + Math.random() * 2) + "s";
+
+        // Don't start everything together
+        confetti.style.animationDelay =
+            (Math.random() * 0.7) + "s";
+
+        // Random size
+        const size = 7 + Math.random() * 8;
+
+        confetti.style.width = size + "px";
+        confetti.style.height = size * 1.5 + "px";
+
+        document.body.appendChild(confetti);
+
+        // Remove afterwards
         setTimeout(function () {
             confetti.remove();
         }, 5000);
@@ -895,8 +946,8 @@ function restoreBoard(size, playerAnswers) {
 
                 cell.addEventListener("click", function () {
                     selectCell(this);
-                }
-                );
+                    highlightSameNumbers(this.textContent);
+                });
             }
             sudokuBoard.appendChild(cell);
         }
