@@ -4,7 +4,7 @@ let solutionBoard = [];
 let puzzleBoard = [];
 let selectedCell = null;
 let isPaused = false;
-let isDailyChallene = false;
+let isDailyChallenge = false;
 
 
 // =====================
@@ -525,6 +525,52 @@ function recordLoss() {
     saveStats(stats);
 }
 
+// ============================
+// DAILY CHALLENGE
+// ============================
+
+function getTodayDateKey() {
+
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+
+function markDailyChallengeCompleted() {
+
+    const todayKey = getTodayDateKey();
+
+    localStorage.setItem(
+        "sudokuDailyCompleted",
+        todayKey
+    );
+}
+
+
+function isDailyChallengeCompletedToday() {
+
+    const savedDate =
+        localStorage.getItem("sudokuDailyCompleted");
+
+    return savedDate === getTodayDateKey();
+}
+
+function updateDailyChallengeButton() {
+
+    if (isDailyChallengeCompletedToday()) {
+        dailyChallengeBtn.textContent = "✅ Completed Today";
+        dailyChallengeBtn.classList.add("daily-completed");
+    } else {
+        dailyChallengeBtn.textContent = "📅 Daily Challenge";
+        dailyChallengeBtn.classList.remove("daily-completed");
+    }
+}
+
 
 // ============================
 // PAUSE / RESUME
@@ -614,6 +660,9 @@ function gameWon() {
 
     const isNewBest = savePersonalBest();
     recordWin();
+    if (isDailyChallenge) {
+        markDailyChallengeCompleted();
+    }
     const bestTime = getPersonalBest();
 
     localStorage.removeItem("sudokuSavedGame");
@@ -1083,3 +1132,5 @@ dailyChallengeBtn.addEventListener("click", function () {
     startGame(9, "hard", true);
 
 });
+
+updateDailyChallengeButton();
