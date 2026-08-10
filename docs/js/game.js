@@ -894,65 +894,25 @@ function launchBestConfetti() {
 
 function gameOver() {
 
-    // Stop the timer
     pauseTimer();
-
-    // Record loss
     recordLoss();
 
-    // Show Game Over modal FIRST
-    gameOverModal.style.display = "flex";
-
     if (isDailyChallenge) {
-
         markDailyChallengeFailed();
         resetDailyStreak();
         updateDailyChallengeButton();
         updateDailyStreakDisplay();
 
         localStorage.removeItem(DAILY_SAVE_KEY);
-
-        const title = document.getElementById("gameOverTitle");
-        const message = document.getElementById("gameOverMessage");
-        const streak = document.getElementById("dailyGameOverStreak");
-
-        if (title) {
-            title.textContent ="❌ Daily Challenge Failed";
-        }
-
-        if (message) {
-            message.textContent = "You made 3 mistakes. Come back tomorrow!";
-        }
-
-        if (streak) {
-            streak.textContent = `🔥 Streak: ${getDailyStats().currentStreak}`;
-            streak.style.display = "block";
-        }
-
     } else {
-
         localStorage.removeItem(NORMAL_SAVE_KEY);
-
-        const title = document.getElementById("gameOverTitle");
-        const message = document.getElementById("gameOverMessage");
-        const streak = document.getElementById("dailyGameOverStreak");
-
-        if (title) {
-            title.textContent = "Game Over";
-        }
-
-        if (message) {
-            message.textContent = "You made 3 mistakes.";
-        }
-
-        if (streak) {
-            streak.style.display = "none";
-        }
     }
 
-    // Final time
-    gameOverTime.textContent =
-        gameTimer.textContent;
+    // Show final time
+    gameOverTime.textContent = gameTimer.textContent;
+
+    // Show modal
+    gameOverModal.style.display = "flex";
 }
 
 
