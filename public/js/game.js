@@ -317,6 +317,12 @@ function animateWave(cells) {
 
 function enterNumber(number) {
 
+    // Game already over
+    if (mistakes >= maxMistakes) {
+        return;
+    }
+
+
     // Player hasn't selected a cell
     if (selectedCell === null) {
         return;
