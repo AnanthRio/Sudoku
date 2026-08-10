@@ -958,3 +958,26 @@ Remaining cells
         color: #ff4757;
     }
 }
+
+/* =========================
+   DAILY CHALLENGE
+========================= */
+
+.daily-challenge-btn {
+    width: 180px;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 8px;
+
+    background: #7c4dff;
+    color: white;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.daily-challenge-btn:hover {
+    background: #6a3de8;
+}
