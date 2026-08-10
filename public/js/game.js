@@ -559,6 +559,31 @@ function markDailyChallengeCompleted() {
     );
 }
 
+function markDailyChallengeFailed() {
+
+    const todayKey = getTodayDateKey();
+
+    localStorage.setItem(
+        "sudokuDailyFailed",
+        todayKey
+    );
+}
+
+function isDailyChallengeFailedToday() {
+
+    const savedDate =
+        localStorage.getItem("sudokuDailyFailed");
+
+    return savedDate === getTodayDateKey();
+}
+
+function resetDailyStreak() {
+
+    const stats = getDailyStats();
+    stats.currentStreak = 0;
+    saveDailyStats(stats);
+}
+
 
 function isDailyChallengeCompletedToday() {
 
@@ -571,11 +596,31 @@ function isDailyChallengeCompletedToday() {
 function updateDailyChallengeButton() {
 
     if (isDailyChallengeCompletedToday()) {
-        dailyChallengeBtn.textContent = "✅ Completed Today";
+
+        dailyChallengeBtn.textContent =
+            "✅ Completed Today";
+
         dailyChallengeBtn.classList.add("daily-completed");
+
+        dailyChallengeBtn.disabled = true;
+
+    } else if (isDailyChallengeFailedToday()) {
+
+        dailyChallengeBtn.textContent =
+            "❌ Failed Today";
+
+        dailyChallengeBtn.classList.add("daily-completed");
+
+        dailyChallengeBtn.disabled = true;
+
     } else {
-        dailyChallengeBtn.textContent = "📅 Daily Challenge";
+
+        dailyChallengeBtn.textContent =
+            "📅 Daily Challenge";
+
         dailyChallengeBtn.classList.remove("daily-completed");
+
+        dailyChallengeBtn.disabled = false;
     }
 }
 
@@ -874,6 +919,10 @@ function gameOver() {
     recordLoss();
 
     if (isDailyChallenge) {
+        markDailyChallengeFailed();
+        resetDailyStreak();
+        updateDailyChallengeButton();
+        updateDailyStreakDisplay();
         localStorage.removeItem(DAILY_SAVE_KEY);
     } else {
         localStorage.removeItem(NORMAL_SAVE_KEY);
@@ -881,6 +930,7 @@ function gameOver() {
 
     // Show final time
     gameOverTime.textContent = gameTimer.textContent;
+
     // Show modal
     gameOverModal.style.display = "flex";
 }
@@ -1247,6 +1297,13 @@ function moveSelectedCell(direction) {
 }
 
 dailyChallengeBtn.addEventListener("click", function () {
+
+    if (
+        isDailyChallengeCompletedToday() ||
+        isDailyChallengeFailedToday()
+    ) {
+        return;
+    }
 
     continueGameArea.style.display = "none";
     homeActions.style.display = "none";
