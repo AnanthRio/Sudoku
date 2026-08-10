@@ -10,7 +10,6 @@ function generateSolvedBoard(size, randomFn = Math.random) {
     );
 
     fillBoard(board, size, randomFn);
-
     return board;
 }
 
@@ -22,7 +21,6 @@ function generateSolvedBoard(size, randomFn = Math.random) {
 function fillBoard(board, size, randomFn = Math.random) {
 
     for (let row = 0; row < size; row++) {
-
         for (let col = 0; col < size; col++) {
 
             // Find empty cell
@@ -187,9 +185,7 @@ function countSolutions(board, size, limit = 2) {
 
     // Find first empty cell
     for (let row = 0; row < size; row++) {
-
         for (let col = 0; col < size; col++) {
-
             if (board[row][col] === 0) {
 
                 emptyRow = row;
@@ -214,7 +210,6 @@ function countSolutions(board, size, limit = 2) {
     let solutionCount = 0;
 
     for (let number = 1; number <= size; number++) {
-
         if (
             isValid(
                 board,
@@ -226,7 +221,6 @@ function countSolutions(board, size, limit = 2) {
         ) {
 
             board[emptyRow][emptyCol] = number;
-
             solutionCount += countSolutions(board,size,limit);
 
             // Undo
@@ -248,10 +242,8 @@ function countSolutions(board, size, limit = 2) {
 // =======================
 
 function createPuzzle(solutionBoard,size,difficulty,randomFn = Math.random) {
-
     // Copy solved board
-    const puzzle =
-        solutionBoard.map(function (row) {
+    const puzzle =solutionBoard.map(function (row) {
             return [...row];
         });
 
@@ -263,7 +255,6 @@ function createPuzzle(solutionBoard,size,difficulty,randomFn = Math.random) {
     let removePercent;
 
     switch (difficulty) {
-
         case "easy":
             removePercent = 0.40;
             break;

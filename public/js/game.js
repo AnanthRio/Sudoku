@@ -324,7 +324,6 @@ function enterNumber(number) {
         return;
     }
 
-
     // Player hasn't selected a cell
     if (selectedCell === null) {
         return;
@@ -440,10 +439,7 @@ function saveGame() {
         ? DAILY_SAVE_KEY
         : NORMAL_SAVE_KEY;
 
-    localStorage.setItem(
-        saveKey,
-        JSON.stringify(gameData)
-    );
+    localStorage.setItem(saveKey,JSON.stringify(gameData));
 }
 
 function savePersonalBest() {
@@ -546,23 +542,17 @@ function getTodayDateKey() {
 
 
 function markDailyChallengeCompleted() {
-
     const todayKey = getTodayDateKey();
-
     localStorage.setItem("sudokuDailyCompleted", todayKey);
 }
 
 function markDailyChallengeFailed() {
-
     const todayKey = getTodayDateKey();
-
     localStorage.setItem("sudokuDailyFailed", todayKey);
 }
 
 function isDailyChallengeFailedToday() {
-
     const savedDate = localStorage.getItem("sudokuDailyFailed");
-
     return savedDate === getTodayDateKey();
 }
 
@@ -618,7 +608,6 @@ function getDailyStats() {
 
 
 function saveDailyStats(stats) {
-
     localStorage.setItem("sudokuDailyStats", JSON.stringify(stats));
 }
 
@@ -626,7 +615,6 @@ function saveDailyStats(stats) {
 function getYesterdayDateKey() {
 
     const yesterday = new Date();
-
     yesterday.setDate(yesterday.getDate() - 1);
 
     const year = yesterday.getFullYear();
@@ -798,8 +786,7 @@ function gameWon() {
         winModal.querySelector("h2").textContent = "🎉 Puzzle Complete!";
     }
 
-    const dailyWinStreak =
-        document.getElementById("dailyWinStreak");
+    const dailyWinStreak = document.getElementById("dailyWinStreak");
 
     if (dailyWinStreak) {
         dailyWinStreak.style.display =
@@ -917,30 +904,18 @@ function gameOver() {
 
         localStorage.removeItem(DAILY_SAVE_KEY);
 
-        document.getElementById("gameOverTitle").textContent =
-            "❌ Daily Challenge Failed";
-
-        document.getElementById("gameOverMessage").textContent =
-            "You made 3 mistakes. Come back tomorrow!";
-
-        document.getElementById("dailyGameOverStreak").textContent =
-            `🔥 Streak: ${getDailyStats().currentStreak}`;
-
-        document.getElementById("dailyGameOverStreak").style.display =
-            "block";
+        document.getElementById("gameOverTitle").textContent = "❌ Daily Challenge Failed";
+        document.getElementById("gameOverMessage").textContent = "You made 3 mistakes. Come back tomorrow!";
+        document.getElementById("dailyGameOverStreak").textContent = `🔥 Streak: ${getDailyStats().currentStreak}`;
+        document.getElementById("dailyGameOverStreak").style.display = "block";
 
     } else {
 
         localStorage.removeItem(NORMAL_SAVE_KEY);
 
-        document.getElementById("gameOverTitle").textContent =
-            "Game Over";
-
-        document.getElementById("gameOverMessage").textContent =
-            "You made 3 mistakes.";
-
-        document.getElementById("dailyGameOverStreak").style.display =
-            "none";
+        document.getElementById("gameOverTitle").textContent = "Game Over";
+        document.getElementById("gameOverMessage").textContent = "You made 3 mistakes.";
+        document.getElementById("dailyGameOverStreak").style.display = "none";
     }
 
     // Show final time
@@ -1045,18 +1020,17 @@ function selectCell(cell) {
         });
 
     if (number === "") {
-
         // EMPTY CELL
         // Highlight row + column + box
         highlightRelatedCells(row, col);
 
     } else {
-
         // CELL WITH NUMBER
         // Highlight only matching numbers
         highlightSameNumbers(number);
     }
 }
+
 function loadSavedGame() {
 
     const savedData = localStorage.getItem(NORMAL_SAVE_KEY);
@@ -1110,7 +1084,7 @@ function loadDailySavedGame() {
     }
 
     const savedGame = JSON.parse(savedData);
-    
+
     // Do not restore a Daily game that already reached Game Over
     if (Number(savedGame.mistakes) >= maxMistakes) {
         localStorage.removeItem(DAILY_SAVE_KEY);
@@ -1123,6 +1097,7 @@ function loadDailySavedGame() {
         Number(savedGame.mistakes) || 0,
         maxMistakes
     );
+
     elapsedSeconds = savedGame.elapsedSeconds;
     selectedDifficulty = savedGame.difficulty;
     selectedCell = null;
