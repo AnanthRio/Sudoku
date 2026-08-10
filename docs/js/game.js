@@ -1076,6 +1076,10 @@ function moveSelectedCell(direction) {
 
 dailyChallengeBtn.addEventListener("click", function () {
 
+    continueGameArea.style.display = "none";
+    homeActions.style.display = "none";
+    gameSection.style.display = "block";
+
     startGame(9, "hard", true);
 
 });
