@@ -795,8 +795,18 @@ function gameWon() {
         winModal.querySelector("h2").textContent = "🎉 Puzzle Complete!";
     }
 
-    document.getElementById("dailyWinStreak").style.display = isDailyChallenge ? "block" : "none";
+    const dailyWinStreak = document.getElementById("dailyWinStreak");
 
+    if (isDailyChallenge) {
+
+        dailyWinStreak.textContent = `🔥 Streak: ${getDailyStats().currentStreak}`;
+        dailyWinStreak.style.display = "block";
+
+    } else {
+
+        dailyWinStreak.textContent = "🔥 Streak: 0";
+        dailyWinStreak.style.display = "none";
+    }
     winModal.style.display = "flex";
 }
 
