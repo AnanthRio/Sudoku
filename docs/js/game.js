@@ -378,6 +378,7 @@ function enterNumber(number) {
         // Maximum mistakes reached
         if (mistakes >= maxMistakes) {
             gameOver();
+            return;
         }
     }
 
