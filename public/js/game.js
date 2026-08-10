@@ -1121,7 +1121,7 @@ function loadDailySavedGame() {
     selectedDifficulty = savedGame.difficulty;
     selectedCell = null;
     isDailyChallenge = true;
-    // Reset pause state after loading Daily game
+    // Reset pause state when restoring Daily Challenge
     isPaused = false;
     sudokuBoard.classList.remove("paused");
     pauseOverlay.style.display = "none";
