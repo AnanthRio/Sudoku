@@ -910,7 +910,7 @@ function gameOver() {
         document.getElementById("dailyGameOverStreak").style.display = "block";
     } else {
         localStorage.removeItem(NORMAL_SAVE_KEY);
-        document.getElementById("gameOverTitle").textContent ="Game Over";
+        document.getElementById("gameOverTitle").textContent = "Game Over";
         document.getElementById("gameOverMessage").textContent = "You made 3 mistakes.";
         document.getElementById("dailyGameOverStreak").style.display = "none";
     }
@@ -1042,7 +1042,10 @@ function loadSavedGame() {
     // Restore game state
     solutionBoard = savedGame.solutionBoard;
     puzzleBoard = savedGame.puzzleBoard;
-    mistakes = savedGame.mistakes;
+    mistakes = Math.min(
+        Number(savedGame.mistakes) || 0,
+        maxMistakes
+    );
     elapsedSeconds = savedGame.elapsedSeconds;
     selectedDifficulty = savedGame.difficulty;
     selectedCell = null;
@@ -1076,7 +1079,10 @@ function loadDailySavedGame() {
 
     solutionBoard = savedGame.solutionBoard;
     puzzleBoard = savedGame.puzzleBoard;
-    mistakes = savedGame.mistakes;
+    mistakes = Math.min(
+        Number(savedGame.mistakes) || 0,
+        maxMistakes
+    );
     elapsedSeconds = savedGame.elapsedSeconds;
     selectedDifficulty = savedGame.difficulty;
     selectedCell = null;
