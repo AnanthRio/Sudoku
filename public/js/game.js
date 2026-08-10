@@ -795,18 +795,15 @@ function gameWon() {
         winModal.querySelector("h2").textContent = "🎉 Puzzle Complete!";
     }
 
-    const dailyWinStreak = document.getElementById("dailyWinStreak");
+    const dailyWinStreak =
+        document.getElementById("dailyWinStreak");
 
-    if (isDailyChallenge) {
-
-        dailyWinStreak.textContent = `🔥 Streak: ${getDailyStats().currentStreak}`;
-        dailyWinStreak.style.display = "block";
-
-    } else {
-
-        dailyWinStreak.textContent = "🔥 Streak: 0";
-        dailyWinStreak.style.display = "none";
+    if (dailyWinStreak) {
+        dailyWinStreak.style.display =
+            isDailyChallenge ? "block" : "none";
     }
+
+    // Show Win modal
     winModal.style.display = "flex";
 }
 
