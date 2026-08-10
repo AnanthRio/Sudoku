@@ -209,17 +209,10 @@ themeToggle.addEventListener("click", function () {
 
     if (document.body.classList.contains("dark-mode")) {
         themeToggle.textContent = "☀️";
-        localStorage.setItem(
-            "sudokuTheme",
-            "dark"
-        );
-
+        localStorage.setItem("sudokuTheme","dark");
     } else {
         themeToggle.textContent = "🌙";
-        localStorage.setItem(
-            "sudokuTheme",
-            "light"
-        );
+        localStorage.setItem("sudokuTheme","light");
     }
 });
 

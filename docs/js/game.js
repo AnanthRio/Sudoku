@@ -40,10 +40,8 @@ function createBoard(size, difficulty, daily = false) {
     size = Number(size);
 
     sudokuBoard.innerHTML = "";
-    sudokuBoard.style.gridTemplateColumns =
-        `repeat(${size}, 1fr)`;
-    sudokuBoard.style.gridTemplateRows =
-        `repeat(${size}, 1fr)`;
+    sudokuBoard.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    sudokuBoard.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
     let randomFn = Math.random;
 
@@ -52,13 +50,7 @@ function createBoard(size, difficulty, daily = false) {
     }
 
     solutionBoard = generateSolvedBoard(size, randomFn);
-
-    puzzleBoard = createPuzzle(
-        solutionBoard,
-        size,
-        difficulty,
-        randomFn
-    );
+    puzzleBoard = createPuzzle(solutionBoard, size, difficulty, randomFn);
 
 
     for (let row = 0; row < size; row++) {
@@ -138,8 +130,7 @@ function startGame(size, difficulty, daily = false) {
 
 
 function updateMistakeDisplay() {
-    mistakeDisplay.textContent =
-        `Mistakes: ${mistakes}/${maxMistakes}`;
+    mistakeDisplay.textContent = `Mistakes: ${mistakes}/${maxMistakes}`;
 }
 
 function animateMistake() {
@@ -167,9 +158,7 @@ function createNumberPad(size) {
         const button = document.createElement("button");
         button.classList.add("number-btn");
         button.textContent = number;
-
         button.dataset.number = number;
-
         button.addEventListener("click", function () {
             enterNumber(number);
         });
@@ -182,9 +171,7 @@ function updateCompletedNumbers() {
     const size = solutionBoard.length;
 
     for (let number = 1; number <= size; number++) {
-
         let correctCount = 0;
-
         const cells = document.querySelectorAll(".sudoku-cell");
 
         cells.forEach(function (cell) {
@@ -268,7 +255,6 @@ function checkCompletedSections(row, col) {
                 )
             );
         }
-
         animateWave(columnCells);
     }
 
@@ -542,7 +528,6 @@ function recordLoss() {
 function getTodayDateKey() {
 
     const today = new Date();
-
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, "0");
     const day = String(today.getDate()).padStart(2, "0");
@@ -555,26 +540,19 @@ function markDailyChallengeCompleted() {
 
     const todayKey = getTodayDateKey();
 
-    localStorage.setItem(
-        "sudokuDailyCompleted",
-        todayKey
-    );
+    localStorage.setItem("sudokuDailyCompleted", todayKey);
 }
 
 function markDailyChallengeFailed() {
 
     const todayKey = getTodayDateKey();
 
-    localStorage.setItem(
-        "sudokuDailyFailed",
-        todayKey
-    );
+    localStorage.setItem("sudokuDailyFailed", todayKey);
 }
 
 function isDailyChallengeFailedToday() {
 
-    const savedDate =
-        localStorage.getItem("sudokuDailyFailed");
+    const savedDate = localStorage.getItem("sudokuDailyFailed");
 
     return savedDate === getTodayDateKey();
 }
@@ -589,39 +567,24 @@ function resetDailyStreak() {
 
 function isDailyChallengeCompletedToday() {
 
-    const savedDate =
-        localStorage.getItem("sudokuDailyCompleted");
-
+    const savedDate = localStorage.getItem("sudokuDailyCompleted");
     return savedDate === getTodayDateKey();
 }
 
 function updateDailyChallengeButton() {
 
     if (isDailyChallengeCompletedToday()) {
-
-        dailyChallengeBtn.textContent =
-            "✅ Completed Today";
-
+        dailyChallengeBtn.textContent = "✅ Completed Today";
         dailyChallengeBtn.classList.add("daily-completed");
-
         dailyChallengeBtn.disabled = true;
 
     } else if (isDailyChallengeFailedToday()) {
-
-        dailyChallengeBtn.textContent =
-            "❌ Failed Today";
-
+        dailyChallengeBtn.textContent = "❌ Failed Today";
         dailyChallengeBtn.classList.add("daily-completed");
-
         dailyChallengeBtn.disabled = true;
-
     } else {
-
-        dailyChallengeBtn.textContent =
-            "📅 Daily Challenge";
-
+        dailyChallengeBtn.textContent = "📅 Daily Challenge";
         dailyChallengeBtn.classList.remove("daily-completed");
-
         dailyChallengeBtn.disabled = false;
     }
 }
@@ -647,10 +610,7 @@ function getDailyStats() {
 
 function saveDailyStats(stats) {
 
-    localStorage.setItem(
-        "sudokuDailyStats",
-        JSON.stringify(stats)
-    );
+    localStorage.setItem("sudokuDailyStats", JSON.stringify(stats));
 }
 
 
@@ -791,6 +751,8 @@ function gameWon() {
         updateDailyStreak();
         updateDailyChallengeButton();
         updateDailyStreakDisplay();
+
+        document.getElementById("dailyWinStreak").textContent = `🔥 Streak: ${getDailyStats().currentStreak}`;
     }
     const bestTime = getPersonalBest();
 
@@ -819,6 +781,14 @@ function gameWon() {
         // Normal celebration
         launchConfetti();
     }
+
+    if (isDailyChallenge) {
+        winModal.querySelector("h2").textContent = "🎉 Daily Challenge Complete!";
+    } else {
+        winModal.querySelector("h2").textContent = "🎉 Puzzle Complete!";
+    }
+
+    document.getElementById("dailyWinStreak").style.display = isDailyChallenge ? "block" : "none";
 
     winModal.style.display = "flex";
 }
@@ -926,8 +896,16 @@ function gameOver() {
         updateDailyChallengeButton();
         updateDailyStreakDisplay();
         localStorage.removeItem(DAILY_SAVE_KEY);
+
+        document.getElementById("gameOverTitle").textContent = "❌ Daily Challenge Failed";
+        document.getElementById("gameOverMessage").textContent = "You made 3 mistakes. Come back tomorrow!";
+        document.getElementById("dailyGameOverStreak").textContent = `🔥 Streak: ${getDailyStats().currentStreak}`;
+        document.getElementById("dailyGameOverStreak").style.display = "block";
     } else {
         localStorage.removeItem(NORMAL_SAVE_KEY);
+        document.getElementById("gameOverTitle").textContent ="Game Over";
+        document.getElementById("gameOverMessage").textContent = "You made 3 mistakes.";
+        document.getElementById("dailyGameOverStreak").style.display = "none";
     }
 
     // Show final time
@@ -1073,10 +1051,7 @@ function loadSavedGame() {
     updateTimerDisplay();
 
     // Rebuild board using SAVED puzzle
-    restoreBoard(
-        size,
-        savedGame.playerAnswers
-    );
+    restoreBoard(size, savedGame.playerAnswers);
 
     createNumberPad(size);
     updateCompletedNumbers();
@@ -1084,8 +1059,7 @@ function loadSavedGame() {
 
 function loadDailySavedGame() {
 
-    const savedData =
-        localStorage.getItem(DAILY_SAVE_KEY);
+    const savedData = localStorage.getItem(DAILY_SAVE_KEY);
 
     if (savedData === null) {
         return false;
@@ -1099,7 +1073,6 @@ function loadDailySavedGame() {
     elapsedSeconds = savedGame.elapsedSeconds;
     selectedDifficulty = savedGame.difficulty;
     selectedCell = null;
-
     isDailyChallenge = true;
 
     const size = savedGame.size;
@@ -1111,10 +1084,7 @@ function loadDailySavedGame() {
     updateMistakeDisplay();
     updateTimerDisplay();
 
-    restoreBoard(
-        size,
-        savedGame.playerAnswers
-    );
+    restoreBoard(size, savedGame.playerAnswers);
 
     createNumberPad(size);
     updateCompletedNumbers();
@@ -1171,9 +1141,7 @@ function restoreBoard(size, playerAnswers) {
             // ------------------
 
             if (puzzleBoard[row][col] !== 0) {
-                cell.textContent =
-                    puzzleBoard[row][col];
-
+                cell.textContent = puzzleBoard[row][col];
                 cell.classList.add("given-cell");
 
             } else {
