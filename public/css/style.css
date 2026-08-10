@@ -981,8 +981,15 @@ Remaining cells
 }
 
 .daily-streak-display {
-    margin: 15px 0;
-    color: #ff6b35;
-    font-size: 18px;
-    font-weight: 700;
+    position: absolute;
+    top: 20px;
+    right: 80px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background: var(--surface-color);
+    color: var(--text-color);
+    font-size: 20px;
+    cursor: pointer;
 }
