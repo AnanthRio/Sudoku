@@ -702,8 +702,8 @@ Remaining cells
     position: absolute;
     top: 20px;
     right: 25px;
-    width: 42px;
-    height: 42px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: 1px solid var(--border-color);
     color: var(--text-color);
@@ -724,8 +724,8 @@ Remaining cells
     position: absolute;
     top: 20px;
     right: 80px;
-    width: 42px;
-    height: 42px;
+    width: 50px;
+    height: 50px;
     border: 1px solid var(--border-color);
     border-radius: 50%;
     background: var(--surface-color);
