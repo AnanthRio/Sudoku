@@ -983,9 +983,9 @@ Remaining cells
 .daily-streak-display {
     position: absolute;
     top: 20px;
-    right: 150px;
+    right: 140px;
     width: 50px;
-    height: 42px;
+    height: 50px;
     border: 1px solid var(--border-color);
     border-radius: 50%;
     background: var(--surface-color);
