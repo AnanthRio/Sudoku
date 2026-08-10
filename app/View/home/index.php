@@ -20,6 +20,11 @@
                 Keep your mind sharp ✏️
             </p>
         </div>
+
+        <div id="dailyStreakDisplay" class="daily-streak-display">
+            🔥 0 Day Streak
+        </div>
+        
         <button id="themeToggle" class="theme-toggle">
             🌙
         </button>

@@ -158,7 +158,6 @@ winHomeBtn.addEventListener("click", function () {
 
     // Finished game cannot be continued
     continueGameArea.style.display = "none";
-
     selectedCell = null;
 });
 

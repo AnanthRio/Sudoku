@@ -968,18 +968,21 @@ Remaining cells
     padding: 14px 10px;
     border: none;
     border-radius: 8px;
-
     background: #7c4dff;
     color: white;
-
     font-size: 17px;
     font-weight: 600;
-
     cursor: pointer;
-
     white-space: nowrap;
 }
 
 .daily-challenge-btn:hover {
     background: #6a3de8;
+}
+
+.daily-streak-display {
+    margin-top: -4px;
+    color: #ff6b35;
+    font-size: 15px;
+    font-weight: 600;
 }

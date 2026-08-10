@@ -28,6 +28,7 @@ const pauseOverlay = document.getElementById("pauseOverlay");
 const newBestMessage = document.getElementById("newBestMessage");
 const winBestTime = document.getElementById("winBestTime");
 const dailyChallengeBtn = document.getElementById("dailyChallengeBtn");
+const dailyStreakDisplay = document.getElementById("dailyStreakDisplay");
 
 
 function createBoard(size, difficulty, daily = false) {
@@ -571,6 +572,17 @@ function updateDailyChallengeButton() {
     }
 }
 
+function updateDailyStreakDisplay() {
+
+    const stats = getDailyStats();
+
+    if (stats.currentStreak === 1) {
+        dailyStreakDisplay.textContent = "🔥 1 Day Streak";
+    } else {
+        dailyStreakDisplay.textContent = `🔥 ${stats.currentStreak} Day Streak`;
+    }
+}
+
 function getDailyStats() {
 
     return JSON.parse(
@@ -727,17 +739,14 @@ function gameWon() {
         markDailyChallengeCompleted();
         updateDailyStreak();
         updateDailyChallengeButton();
+        updateDailyStreakDisplay();
     }
     const bestTime = getPersonalBest();
-
     localStorage.removeItem("sudokuSavedGame");
-
     winTime.textContent = gameTimer.textContent;
-
     winMistakes.textContent = `${mistakes}/${maxMistakes}`;
 
     const bestMinutes = Math.floor(bestTime / 60);
-
     const bestSeconds = bestTime % 60;
 
     winBestTime.textContent =
@@ -746,16 +755,11 @@ function gameWon() {
         String(bestSeconds).padStart(2, "0");
 
     if (isNewBest) {
-
         newBestMessage.style.display = "block";
-
         // Special gold celebration for personal best
         launchBestConfetti();
-
     } else {
-
         newBestMessage.style.display = "none";
-
         // Normal celebration
         launchConfetti();
     }
@@ -1199,3 +1203,4 @@ dailyChallengeBtn.addEventListener("click", function () {
 });
 
 updateDailyChallengeButton();
+updateDailyStreakDisplay();
