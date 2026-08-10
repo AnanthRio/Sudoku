@@ -747,6 +747,7 @@ function highlightSameNumbers(number) {
 }
 
 function gameWon() {
+     console.log("GAME WON START");
 
     pauseTimer();
 
@@ -803,6 +804,7 @@ function gameWon() {
             isDailyChallenge ? "block" : "none";
     }
 
+    console.log("ABOUT TO SHOW WIN MODAL");
     // Show Win modal
     winModal.style.display = "flex";
 }
