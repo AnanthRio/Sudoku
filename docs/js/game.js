@@ -898,14 +898,38 @@ function gameOver() {
     recordLoss();
 
     if (isDailyChallenge) {
+
         markDailyChallengeFailed();
         resetDailyStreak();
         updateDailyChallengeButton();
         updateDailyStreakDisplay();
 
         localStorage.removeItem(DAILY_SAVE_KEY);
+
+        document.getElementById("gameOverTitle").textContent =
+            "❌ Daily Challenge Failed";
+
+        document.getElementById("gameOverMessage").textContent =
+            "You made 3 mistakes. Come back tomorrow!";
+
+        document.getElementById("dailyGameOverStreak").textContent =
+            `🔥 Streak: ${getDailyStats().currentStreak}`;
+
+        document.getElementById("dailyGameOverStreak").style.display =
+            "block";
+
     } else {
+
         localStorage.removeItem(NORMAL_SAVE_KEY);
+
+        document.getElementById("gameOverTitle").textContent =
+            "Game Over";
+
+        document.getElementById("gameOverMessage").textContent =
+            "You made 3 mistakes.";
+
+        document.getElementById("dailyGameOverStreak").style.display =
+            "none";
     }
 
     // Show final time
