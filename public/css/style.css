@@ -965,7 +965,7 @@ Remaining cells
 
 .daily-challenge-btn {
     width: 180px;
-    padding: 14px 25px;
+    padding: 14px 10px;
     border: none;
     border-radius: 8px;
 
@@ -976,6 +976,8 @@ Remaining cells
     font-weight: 600;
 
     cursor: pointer;
+
+    white-space: nowrap;
 }
 
 .daily-challenge-btn:hover {
