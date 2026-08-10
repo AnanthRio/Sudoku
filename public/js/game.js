@@ -7,6 +7,7 @@ let isPaused = false;
 let isDailyChallenge = false;
 
 
+
 // =====================
 // GAME ELEMENTS
 // =====================
@@ -29,6 +30,8 @@ const newBestMessage = document.getElementById("newBestMessage");
 const winBestTime = document.getElementById("winBestTime");
 const dailyChallengeBtn = document.getElementById("dailyChallengeBtn");
 const dailyStreakDisplay = document.getElementById("dailyStreakDisplay");
+const NORMAL_SAVE_KEY = "sudokuNormalSavedGame";
+const DAILY_SAVE_KEY = "sudokuDailySavedGame";
 
 
 function createBoard(size, difficulty, daily = false) {
@@ -1196,6 +1199,19 @@ dailyChallengeBtn.addEventListener("click", function () {
 
     startGame(9, "hard", true);
 
+});
+
+continueGameBtn.addEventListener("click", function () {
+
+    continueGameArea.style.display = "none";
+    homeActions.style.display = "none";
+    gameSection.style.display = "block";
+
+    loadSavedGame();
+
+    isDailyChallenge = false;
+
+    startTimer();
 });
 
 updateDailyChallengeButton();
