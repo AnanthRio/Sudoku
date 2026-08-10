@@ -571,6 +571,69 @@ function updateDailyChallengeButton() {
     }
 }
 
+function getDailyStats() {
+
+    return JSON.parse(
+        localStorage.getItem("sudokuDailyStats")
+    ) || {
+        currentStreak: 0,
+        bestStreak: 0,
+        lastCompleted: null
+    };
+}
+
+
+function saveDailyStats(stats) {
+
+    localStorage.setItem(
+        "sudokuDailyStats",
+        JSON.stringify(stats)
+    );
+}
+
+
+function getYesterdayDateKey() {
+
+    const yesterday = new Date();
+
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const year = yesterday.getFullYear();
+    const month = String(yesterday.getMonth() + 1).padStart(2, "0");
+    const day = String(yesterday.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+function updateDailyStreak() {
+
+    const stats = getDailyStats();
+    const today = getTodayDateKey();
+    const yesterday = getYesterdayDateKey();
+
+    // Already completed today
+    if (stats.lastCompleted === today) {
+        return;
+    }
+
+    // Completed yesterday → continue streak
+    if (stats.lastCompleted === yesterday) {
+        stats.currentStreak++;
+    } else {
+        // Missed a day or this is the first challenge
+        stats.currentStreak = 1;
+    }
+
+    // Update best streak
+    if (stats.currentStreak > stats.bestStreak) {
+        stats.bestStreak = stats.currentStreak;
+    }
+
+    stats.lastCompleted = today;
+
+    saveDailyStats(stats);
+}
+
 
 // ============================
 // PAUSE / RESUME
@@ -662,6 +725,8 @@ function gameWon() {
     recordWin();
     if (isDailyChallenge) {
         markDailyChallengeCompleted();
+        updateDailyStreak();
+        updateDailyChallengeButton();
     }
     const bestTime = getPersonalBest();
 

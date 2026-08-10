@@ -74,16 +74,13 @@ function isValid(board, row, col, number, size) {
 
     // Check row
     for (let i = 0; i < size; i++) {
-
         if (board[row][i] === number) {
             return false;
         }
     }
 
-
     // Check column
     for (let i = 0; i < size; i++) {
-
         if (board[i][col] === number) {
             return false;
         }
@@ -95,24 +92,16 @@ function isValid(board, row, col, number, size) {
     let boxCols;
 
     if (size === 6) {
-
         boxRows = 2;
         boxCols = 3;
-
     } else {
-
         boxRows = 3;
         boxCols = 3;
     }
 
-
     // Find starting position of box
-    const startRow =
-        Math.floor(row / boxRows) * boxRows;
-
-    const startCol =
-        Math.floor(col / boxCols) * boxCols;
-
+    const startRow = Math.floor(row / boxRows) * boxRows;
+    const startCol = Math.floor(col / boxCols) * boxCols;
 
     // Check box
     for (let r = 0; r < boxRows; r++) {
@@ -139,13 +128,11 @@ function shuffle(array, randomFn = Math.random) {
 
     for (let i = array.length - 1; i > 0; i--) {
 
-        const j =
-            Math.floor(randomFn() * (i + 1));
+        const j = Math.floor(randomFn() * (i + 1));
 
         [array[i], array[j]] =
             [array[j], array[i]];
     }
-
     return array;
 }
 
@@ -198,7 +185,6 @@ function countSolutions(board, size, limit = 2) {
     let emptyRow = -1;
     let emptyCol = -1;
 
-
     // Find first empty cell
     for (let row = 0; row < size; row++) {
 
@@ -227,7 +213,6 @@ function countSolutions(board, size, limit = 2) {
 
     let solutionCount = 0;
 
-
     for (let number = 1; number <= size; number++) {
 
         if (
@@ -242,15 +227,10 @@ function countSolutions(board, size, limit = 2) {
 
             board[emptyRow][emptyCol] = number;
 
-            solutionCount += countSolutions(
-                board,
-                size,
-                limit
-            );
+            solutionCount += countSolutions(board,size,limit);
 
             // Undo
             board[emptyRow][emptyCol] = 0;
-
 
             // We only care whether there is MORE than 1
             if (solutionCount >= limit) {
@@ -267,12 +247,7 @@ function countSolutions(board, size, limit = 2) {
 // CREATE PUZZLE
 // =======================
 
-function createPuzzle(
-    solutionBoard,
-    size,
-    difficulty,
-    randomFn = Math.random
-) {
+function createPuzzle(solutionBoard,size,difficulty,randomFn = Math.random) {
 
     // Copy solved board
     const puzzle =
@@ -292,28 +267,22 @@ function createPuzzle(
         case "easy":
             removePercent = 0.40;
             break;
-
         case "medium":
             removePercent = 0.50;
             break;
-
         case "hard":
             removePercent = 0.60;
             break;
-
         case "expert":
             removePercent = 0.70;
             break;
-
         default:
             removePercent = 0.50;
     }
 
 
     const totalCells = size * size;
-
-    const targetRemovals =
-        Math.floor(totalCells * removePercent);
+    const targetRemovals = Math.floor(totalCells * removePercent);
 
 
     // =========================
@@ -323,7 +292,6 @@ function createPuzzle(
     const positions = [];
 
     for (let row = 0; row < size; row++) {
-
         for (let col = 0; col < size; col++) {
 
             positions.push({
@@ -335,7 +303,6 @@ function createPuzzle(
 
 
     shuffle(positions, randomFn);
-
 
     // ====================
     // REMOVE NUMBERS
@@ -350,18 +317,14 @@ function createPuzzle(
             break;
         }
 
-
         const row = position.row;
         const col = position.col;
-
 
         // Save original number
         const backup = puzzle[row][col];
 
-
         // Temporarily remove
         puzzle[row][col] = 0;
-
 
         // Copy board for solver
         const testBoard =
@@ -370,17 +333,12 @@ function createPuzzle(
             });
 
 
-        const solutions =
-            countSolutions(testBoard, size);
-
+        const solutions = countSolutions(testBoard, size);
 
         if (solutions === 1) {
-
             // Safe removal
             removed++;
-
         } else {
-
             // Multiple solutions:
             // put number back
             puzzle[row][col] = backup;
