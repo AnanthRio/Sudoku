@@ -22,7 +22,7 @@
         </div>
 
         <button id="dailyStreakDisplay" class="daily-streak-display">
-            🔥 0 Day Streak
+            🔥 0 
         </button>
 
         <button id="themeToggle" class="theme-toggle">
