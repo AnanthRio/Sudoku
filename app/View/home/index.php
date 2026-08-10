@@ -315,6 +315,16 @@
                     <strong id="statBestStreak">0</strong>
                 </div>
 
+                <div class="stat-box">
+                    <span>🔥 Daily Streak</span>
+                    <strong id="statDailyStreak">0</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>🏆 Best Daily Streak</span>
+                    <strong id="statBestDailyStreak">0</strong>
+                </div>
+
             </div>
 
             <h3>🏆 Personal Bests</h3>

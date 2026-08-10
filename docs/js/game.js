@@ -33,6 +33,8 @@ const dailyChallengeBtn = document.getElementById("dailyChallengeBtn");
 const dailyStreakDisplay = document.getElementById("dailyStreakDisplay");
 const NORMAL_SAVE_KEY = "sudokuNormalSavedGame";
 const DAILY_SAVE_KEY = "sudokuDailySavedGame";
+const statDailyStreak = document.getElementById("statDailyStreak");
+const statBestDailyStreak = document.getElementById("statBestDailyStreak");
 
 
 function createBoard(size, difficulty, daily = false) {
@@ -747,7 +749,7 @@ function highlightSameNumbers(number) {
 }
 
 function gameWon() {
-     console.log("GAME WON START");
+    //  console.log("GAME WON START");
 
     pauseTimer();
 
@@ -804,7 +806,7 @@ function gameWon() {
             isDailyChallenge ? "block" : "none";
     }
 
-    console.log("ABOUT TO SHOW WIN MODAL");
+    // console.log("ABOUT TO SHOW WIN MODAL");
     // Show Win modal
     winModal.style.display = "flex";
 }

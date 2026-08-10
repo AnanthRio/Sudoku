@@ -209,10 +209,10 @@ themeToggle.addEventListener("click", function () {
 
     if (document.body.classList.contains("dark-mode")) {
         themeToggle.textContent = "☀️";
-        localStorage.setItem("sudokuTheme","dark");
+        localStorage.setItem("sudokuTheme", "dark");
     } else {
         themeToggle.textContent = "🌙";
-        localStorage.setItem("sudokuTheme","light");
+        localStorage.setItem("sudokuTheme", "light");
     }
 });
 
@@ -291,9 +291,17 @@ function updateStatsDisplay() {
         ) || {};
 
     // General stats
-    statGamesPlayed.textContent =stats.gamesPlayed;
-    statGamesWon.textContent =stats.gamesWon;
-    statBestStreak.textContent =stats.bestStreak;
+    statGamesPlayed.textContent = stats.gamesPlayed;
+    statGamesWon.textContent = stats.gamesWon;
+    statBestStreak.textContent = stats.bestStreak;
+
+    const dailyStats = getDailyStats();
+
+    statDailyStreak.textContent =
+        dailyStats.currentStreak;
+
+    statBestDailyStreak.textContent =
+        dailyStats.bestStreak;
 
     // Win rate
     let winRate = 0;

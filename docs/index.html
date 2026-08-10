@@ -22,7 +22,7 @@
         </div>
 
         <button id="dailyStreakDisplay" class="daily-streak-display">
-            🔥 0 
+            🔥 0
         </button>
 
         <button id="themeToggle" class="theme-toggle">
@@ -213,7 +213,7 @@
     <div id="winModal" class="modal">
         <div class="modal-content win-content">
             <h2>🎉 Puzzle Complete!</h2>
-            <p>Great job! You solved the puzzle.</p>
+            <p id="winMessage">Great job! You solved the puzzle.</p>
             <p id="newBestMessage" class="new-best-message">
                 🏆 New Personal Best!
             </p>
@@ -234,6 +234,10 @@
                 </div>
             </div>
 
+            <div id="dailyWinStreak" class="daily-win-streak">
+                🔥 Streak: 0
+            </div>
+
             <div class="win-actions">
                 <button id="winHomeBtn" class="back-btn">
                     Home
@@ -251,8 +255,15 @@
     <div id="gameOverModal" class="modal">
         <div class="modal-content game-over-content">
 
-            <h2>Game Over</h2>
-            <p>You made 3 mistakes.</p>
+            <h2 id="gameOverTitle">Game Over</h2>
+
+            <p id="gameOverMessage">
+                You made 3 mistakes.
+            </p>
+
+            <div id="dailyGameOverStreak" class="daily-win-streak">
+                🔥 Streak: 0
+            </div>
 
             <div class="game-over-stats">
                 <span>Time</span>
@@ -302,6 +313,16 @@
                 <div class="stat-box">
                     <span>Best Streak</span>
                     <strong id="statBestStreak">0</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>🔥 Daily Streak</span>
+                    <strong id="statDailyStreak">0</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>🏆 Best Daily Streak</span>
+                    <strong id="statBestDailyStreak">0</strong>
                 </div>
 
             </div>
