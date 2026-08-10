@@ -151,6 +151,45 @@ function shuffle(array, randomFn = Math.random) {
 
 
 // =======================
+// DAILY CHALLENGE SEED
+// =======================
+
+function getDailySeed() {
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    // Convert today's date into one stable number
+    return (
+        year * 10000 +
+        month * 100 +
+        day
+    );
+}
+
+
+// =======================
+// SEEDED RANDOM
+// =======================
+
+function createSeededRandom(seed) {
+
+    let value = seed;
+
+    return function () {
+
+        value = (
+            value * 9301 +
+            49297
+        ) % 233280;
+
+        return value / 233280;
+    };
+}
+
+// =======================
 // COUNT SOLUTIONS
 // =======================
 

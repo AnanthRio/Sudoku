@@ -4,6 +4,7 @@ let solutionBoard = [];
 let puzzleBoard = [];
 let selectedCell = null;
 let isPaused = false;
+let isDailyChallene = false;
 
 
 // =====================
@@ -28,7 +29,7 @@ const newBestMessage = document.getElementById("newBestMessage");
 const winBestTime = document.getElementById("winBestTime");
 
 
-function createBoard(size, difficulty) {
+function createBoard(size, difficulty, daily = false) {
 
     size = Number(size);
 
@@ -38,11 +39,20 @@ function createBoard(size, difficulty) {
     sudokuBoard.style.gridTemplateRows =
         `repeat(${size}, 1fr)`;
 
-    // Complete answer
-    solutionBoard = generateSolvedBoard(size);
+    let randomFn = Math.random;
 
-    // Puzzle shown to player
-    puzzleBoard = createPuzzle(solutionBoard, size, difficulty);
+    if (daily) {
+        randomFn = createSeededRandom(getDailySeed());
+    }
+
+    solutionBoard = generateSolvedBoard(size, randomFn);
+
+    puzzleBoard = createPuzzle(
+        solutionBoard,
+        size,
+        difficulty,
+        randomFn
+    );
 
 
     for (let row = 0; row < size; row++) {
@@ -94,9 +104,10 @@ function createBoard(size, difficulty) {
 }
 
 
-function startGame(size, difficulty) {
+function startGame(size, difficulty, daily = false) {
 
     selectedCell = null;
+    isDailyChallenge = daily;
 
     // Reset pause
     isPaused = false;
@@ -108,7 +119,7 @@ function startGame(size, difficulty) {
 
     gameMode.textContent = size + "×" + size + " • " + difficulty.toUpperCase();
 
-    createBoard(size, difficulty);
+    createBoard(size, difficulty, daily);
 
     mistakes = 0;
     updateMistakeDisplay();
@@ -333,9 +344,9 @@ function enterNumber(number) {
     // Show entered number
     selectedCell.textContent = number;
     document.querySelectorAll(".related-cell")
-    .forEach(function (cell) {
-        cell.classList.remove("related-cell");
-    });
+        .forEach(function (cell) {
+            cell.classList.remove("related-cell");
+        });
 
 
     highlightSameNumbers(number);
@@ -520,7 +531,7 @@ function recordLoss() {
 
 pauseBtn.addEventListener("click", function () {
     if (!isPaused) {
-        // PAUSE
+        // pause
         pauseTimer();
 
         isPaused = true;
@@ -534,7 +545,7 @@ pauseBtn.addEventListener("click", function () {
 
     } else {
 
-        // RESUME
+        // Resume
         startTimer();
         isPaused = false;
 
@@ -704,7 +715,7 @@ function launchBestConfetti() {
         // Gold-family random color
         confetti.style.backgroundColor =
             colors[
-                Math.floor(Math.random() * colors.length)
+            Math.floor(Math.random() * colors.length)
             ];
 
         // Different falling speeds
