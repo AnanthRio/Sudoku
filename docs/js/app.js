@@ -28,14 +28,14 @@ const statGamesWon = document.getElementById("statGamesWon");
 const statWinRate = document.getElementById("statWinRate");
 const statBestStreak = document.getElementById("statBestStreak");
 
-let selectedDifficulty = null;
+let modalSelectedDifficulty = null;
 let selectedBoardSize = null;
 
 // Open modal
 newGameBtn.addEventListener("click", function () {
     // Reset selections
     selectedBoardSize = null;
-    selectedDifficulty = null;
+    modalSelectedDifficulty = null;
     // Uncheck old difficulty
     difficultyButtons.forEach(function (radio) {
         radio.checked = false;
@@ -77,12 +77,12 @@ backBtn.addEventListener("click", function () {
 
 difficultyButtons.forEach(function (radio) {
     radio.addEventListener("change", function () {
-        selectedDifficulty = this.value;
+        modalSelectedDifficulty = this.value;
     });
 });
 
 nextBtn.addEventListener("click", function () {
-    if (selectedDifficulty === null) {
+    if (modalSelectedDifficulty === null) {
         alert("Please select a difficulty");
         return;
     }
@@ -91,7 +91,7 @@ nextBtn.addEventListener("click", function () {
     homeActions.style.display = "none";
     gameSection.style.display = "block";
 
-    startGame(selectedBoardSize, selectedDifficulty);
+    startGame(selectedBoardSize, modalSelectedDifficulty);
 });
 
 // =============================
@@ -158,7 +158,6 @@ winHomeBtn.addEventListener("click", function () {
 
     // Finished game cannot be continued
     continueGameArea.style.display = "none";
-
     selectedCell = null;
 });
 

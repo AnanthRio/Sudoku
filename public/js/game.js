@@ -5,6 +5,7 @@ let puzzleBoard = [];
 let selectedCell = null;
 let isPaused = false;
 let isDailyChallenge = false;
+let selectedDifficulty = "easy";
 
 
 
@@ -113,6 +114,7 @@ function startGame(size, difficulty, daily = false) {
 
     selectedCell = null;
     isDailyChallenge = daily;
+    selectedDifficulty = difficulty;
 
     // Reset pause
     isPaused = false;
