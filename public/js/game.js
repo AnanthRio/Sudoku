@@ -1110,6 +1110,12 @@ function loadDailySavedGame() {
     }
 
     const savedGame = JSON.parse(savedData);
+    
+    // Do not restore a Daily game that already reached Game Over
+    if (Number(savedGame.mistakes) >= maxMistakes) {
+        localStorage.removeItem(DAILY_SAVE_KEY);
+        return false;
+    }
 
     solutionBoard = savedGame.solutionBoard;
     puzzleBoard = savedGame.puzzleBoard;
