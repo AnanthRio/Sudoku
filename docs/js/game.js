@@ -439,8 +439,12 @@ function saveGame() {
         elapsedSeconds: elapsedSeconds
     };
 
+    const saveKey = isDailyChallenge
+        ? DAILY_SAVE_KEY
+        : NORMAL_SAVE_KEY;
+
     localStorage.setItem(
-        "sudokuSavedGame",
+        saveKey,
         JSON.stringify(gameData)
     );
 }
@@ -733,6 +737,7 @@ function gameWon() {
     pauseTimer();
 
     const isNewBest = savePersonalBest();
+
     recordWin();
     if (isDailyChallenge) {
         markDailyChallengeCompleted();
@@ -741,7 +746,12 @@ function gameWon() {
         updateDailyStreakDisplay();
     }
     const bestTime = getPersonalBest();
-    localStorage.removeItem("sudokuSavedGame");
+
+    if (isDailyChallenge) {
+        localStorage.removeItem(DAILY_SAVE_KEY);
+    } else {
+        localStorage.removeItem(NORMAL_SAVE_KEY);
+    }
     winTime.textContent = gameTimer.textContent;
     winMistakes.textContent = `${mistakes}/${maxMistakes}`;
 
@@ -863,7 +873,12 @@ function gameOver() {
     pauseTimer();
     recordLoss();
 
-    localStorage.removeItem("sudokuSavedGame");
+    if (isDailyChallenge) {
+        localStorage.removeItem(DAILY_SAVE_KEY);
+    } else {
+        localStorage.removeItem(NORMAL_SAVE_KEY);
+    }
+
     // Show final time
     gameOverTime.textContent = gameTimer.textContent;
     // Show modal
@@ -888,7 +903,7 @@ function eraseSelectedCell() {
 }
 
 function hasSavedGame() {
-    return localStorage.getItem("sudokuSavedGame") !== null;
+    return localStorage.getItem(NORMAL_SAVE_KEY) !== null;
 }
 
 eraseBtn.addEventListener("click", function () {
@@ -979,7 +994,7 @@ function selectCell(cell) {
 }
 function loadSavedGame() {
 
-    const savedData = localStorage.getItem("sudokuSavedGame");
+    const savedData = localStorage.getItem(NORMAL_SAVE_KEY);
 
     if (savedData === null) {
         return;
@@ -1013,6 +1028,45 @@ function loadSavedGame() {
 
     createNumberPad(size);
     updateCompletedNumbers();
+}
+
+function loadDailySavedGame() {
+
+    const savedData =
+        localStorage.getItem(DAILY_SAVE_KEY);
+
+    if (savedData === null) {
+        return false;
+    }
+
+    const savedGame = JSON.parse(savedData);
+
+    solutionBoard = savedGame.solutionBoard;
+    puzzleBoard = savedGame.puzzleBoard;
+    mistakes = savedGame.mistakes;
+    elapsedSeconds = savedGame.elapsedSeconds;
+    selectedDifficulty = savedGame.difficulty;
+    selectedCell = null;
+    isDailyChallenge = true;
+
+    const size = savedGame.size;
+
+    gameMode.textContent =
+        size + "×" + size + " • " +
+        savedGame.difficulty.toUpperCase();
+
+    updateMistakeDisplay();
+    updateTimerDisplay();
+
+    restoreBoard(
+        size,
+        savedGame.playerAnswers
+    );
+
+    createNumberPad(size);
+    updateCompletedNumbers();
+
+    return true;
 }
 
 function restoreBoard(size, playerAnswers) {
@@ -1197,7 +1251,11 @@ dailyChallengeBtn.addEventListener("click", function () {
     homeActions.style.display = "none";
     gameSection.style.display = "block";
 
-    startGame(9, "hard", true);
+    if (!loadDailySavedGame()) {
+        startGame(9, "hard", true);
+    } else {
+        startTimer();
+    }
 
 });
 
