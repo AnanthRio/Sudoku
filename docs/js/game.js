@@ -576,11 +576,7 @@ function updateDailyStreakDisplay() {
 
     const stats = getDailyStats();
 
-    if (stats.currentStreak === 1) {
-        dailyStreakDisplay.textContent = "🔥 1 Day Streak";
-    } else {
-        dailyStreakDisplay.textContent = `🔥 ${stats.currentStreak} Day Streak`;
-    }
+    dailyStreakDisplay.textContent = `🔥 ${stats.currentStreak}`;
 }
 
 function getDailyStats() {

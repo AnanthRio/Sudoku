@@ -983,7 +983,7 @@ Remaining cells
 .daily-streak-display {
     position: absolute;
     top: 20px;
-    right: 120px;
+    right: 100px;
     width: 42px;
     height: 42px;
     border: 1px solid var(--border-color);
@@ -992,4 +992,7 @@ Remaining cells
     color: var(--text-color);
     font-size: 20px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
