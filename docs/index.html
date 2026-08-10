@@ -21,10 +21,10 @@
             </p>
         </div>
 
-        <div id="dailyStreakDisplay" class="daily-streak-display">
+        <button id="dailyStreakDisplay" class="daily-streak-display">
             🔥 0 Day Streak
-        </div>
-        
+        </button>
+
         <button id="themeToggle" class="theme-toggle">
             🌙
         </button>
