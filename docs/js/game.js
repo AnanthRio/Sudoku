@@ -1077,6 +1077,12 @@ function loadSavedGame() {
     elapsedSeconds = savedGame.elapsedSeconds;
     selectedDifficulty = savedGame.difficulty;
     selectedCell = null;
+    isPaused = false;
+    sudokuBoard.classList.remove("paused");
+    pauseOverlay.style.display = "none";
+    numberPad.style.visibility = "visible";
+    eraseBtn.style.visibility = "visible";
+    pauseBtn.textContent = "⏸";
 
     const size = savedGame.size;
 
@@ -1115,6 +1121,13 @@ function loadDailySavedGame() {
     selectedDifficulty = savedGame.difficulty;
     selectedCell = null;
     isDailyChallenge = true;
+    // Reset pause state after loading Daily game
+    isPaused = false;
+    sudokuBoard.classList.remove("paused");
+    pauseOverlay.style.display = "none";
+    numberPad.style.visibility = "visible";
+    eraseBtn.style.visibility = "visible";
+    pauseBtn.textContent = "⏸";
 
     const size = savedGame.size;
 
