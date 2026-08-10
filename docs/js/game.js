@@ -27,6 +27,7 @@ const pauseBtn = document.getElementById("pauseBtn");
 const pauseOverlay = document.getElementById("pauseOverlay");
 const newBestMessage = document.getElementById("newBestMessage");
 const winBestTime = document.getElementById("winBestTime");
+const dailyChallengeBtn = document.getElementById("dailyChallengeBtn");
 
 
 function createBoard(size, difficulty, daily = false) {
@@ -1072,3 +1073,9 @@ function moveSelectedCell(direction) {
 
     selectCell(nextCell);
 }
+
+dailyChallengeBtn.addEventListener("click", function () {
+
+    startGame(9, "hard", true);
+
+});

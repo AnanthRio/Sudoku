@@ -67,6 +67,10 @@
                 New Game
             </button>
 
+            <button id="dailyChallengeBtn" class="daily-challenge-btn">
+                📅 Daily Challenge
+            </button>
+
             <button id="statsBtn" class="stats-btn">
                 📊 Statistics
             </button>
