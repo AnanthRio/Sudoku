@@ -594,37 +594,37 @@ function updateHintDisplay() {
 function useHint() {
 
     // No Hints left
-    if(hintsUsed >= maxHints) {
+    if (hintsUsed >= maxHints) {
         return;
     }
 
     const emptyCells = [];
     const cells = document.querySelectorAll(".sudoku-cell");
 
-    cells.forEach(function (cell){
+    cells.forEach(function (cell) {
 
         //Only consider cells that the player can still solve
-        if(
+        if (
             cell.classList.contains("empty-cell") &&
             !cell.classList.contains("given-cell") &&
             !cell.classList.contains("correct-cell")
-        ){
-            const row =Number(cell.dataset.row);
+        ) {
+            const row = Number(cell.dataset.row);
             const col = Number(cell.dataset.col);
 
             //Only truly empty cells
-            if(cell.textContent === "") {
+            if (cell.textContent === "") {
                 emptyCells.push({
                     cell: cell,
-                    row:row,
-                    col:col
+                    row: row,
+                    col: col
                 });
             }
         }
     });
 
     //No empty cells available
-    if(emptyCells.length === 0) {
+    if (emptyCells.length === 0) {
         return;
     }
 
@@ -632,7 +632,8 @@ function useHint() {
     const randomIndex = Math.floor(Math.random() * emptyCells.length);
     const target = emptyCells[randomIndex];
 
-    //Reveal correct answer
+    // Reveal correct answer
+    target.cell.textContent = solutionBoard[target.row][target.col];
     target.cell.classList.add("correct-cell");
     target.cell.classList.add("hint-cell");
 
@@ -646,12 +647,12 @@ function useHint() {
     saveGame();
 
     //Check whether hint happened to complete puzzle
-    if(checkGameComplete()) {
+    if (checkGameComplete()) {
         gameWon();
     }
 }
 
-hintBtn.addEventListener("click", function(){
+hintBtn.addEventListener("click", function () {
     useHint();
 });
 
