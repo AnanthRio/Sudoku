@@ -551,6 +551,7 @@ Remaining cells
 .game-tools {
     display: flex;
     justify-content: center;
+    gap: 8px;
     margin-top: 12px;
 }
 
@@ -569,6 +570,27 @@ Remaining cells
 .erase-btn:hover {
     background: #f0f0f0;
 }
+
+.hint-btn {
+    padding: 9px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--surface-color);
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.hint-btn:hover {
+    background: #f0f0f0;
+}
+
+.hint-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 
 /* Border styles for 3x3 boxes */
 
