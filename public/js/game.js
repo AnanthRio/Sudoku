@@ -6,6 +6,8 @@ let selectedCell = null;
 let isPaused = false;
 let isDailyChallenge = false;
 let selectedDifficulty = "easy";
+let hintsUsed = 0;
+let maxHints = 0;
 
 
 
@@ -35,6 +37,8 @@ const NORMAL_SAVE_KEY = "sudokuNormalSavedGame";
 const DAILY_SAVE_KEY = "sudokuDailySavedGame";
 const statDailyStreak = document.getElementById("statDailyStreak");
 const statBestDailyStreak = document.getElementById("statBestDailyStreak");
+const hintBtn = document.getElementById("hintBtn");
+const hintCount = document.getElementById("hintCount");
 
 
 function createBoard(size, difficulty, daily = false) {
@@ -109,6 +113,15 @@ function startGame(size, difficulty, daily = false) {
     selectedCell = null;
     isDailyChallenge = daily;
     selectedDifficulty = difficulty;
+
+    hintsUsed = 0;
+
+    if (size === 6) {
+        maxHints = 2;
+    } else if (size === 9) {
+        maxHints = 3;
+    }
+    updateHintDisplay();
 
     // Reset pause
     isPaused = false;
@@ -439,7 +452,7 @@ function saveGame() {
         ? DAILY_SAVE_KEY
         : NORMAL_SAVE_KEY;
 
-    localStorage.setItem(saveKey,JSON.stringify(gameData));
+    localStorage.setItem(saveKey, JSON.stringify(gameData));
 }
 
 function savePersonalBest() {
@@ -562,6 +575,83 @@ function resetDailyStreak() {
     stats.currentStreak = 0;
     saveDailyStats(stats);
 }
+
+function updateHintDisplay() {
+
+    const remaining = maxHints - hintsUsed;
+
+    hintCount.textContent = remaining;
+
+    if (remaining <= 0) {
+        hintBtn.disabled = true;
+    } else {
+        hintBtn.disabled = false;
+    }
+}
+
+function useHint() {
+
+    // No Hints left
+    if(hintsUsed >= maxHints) {
+        return;
+    }
+
+    const emptyCells = [];
+    const cells = document.querySelectorAll(".sudoku-cell");
+
+    cells.forEach(function (cell){
+
+        //Only consider cells that the player can still solve
+        if(
+            cell.classList.contains("empty-cell") &&
+            !cell/classList.contains("given-cell") &&
+            !cell.classList.contains("correct-cell")
+        ){
+            const row =Number(cell.dataset.row);
+            const col = Number(cell.dataset.col);
+
+            //Only truly empty cells
+            if(cell.textContent === "") {
+                emptyCells.push({
+                    cell: cell,
+                    row:row,
+                    col:col
+                });
+            }
+        }
+    });
+
+    //No empty cells available
+    if(emptyCells.length === 0) {
+        return;
+    }
+
+    //Pick random empty cell
+    const randomIndex = Math.floor(Math.random() * emptyCells.length);
+    const target = emptyCells[randomIndex];
+
+    //Reveal correct answer
+    target.cell.classList.add("correct-cell");
+    target.cell.classList.add("hint-cell");
+
+    hintsUsed++;
+    updateHintDisplay();
+
+    //Update completed numbers
+    updateCompletedNumbers();
+
+    //Save game
+    saveGame();
+
+    //Check whether hint happened to complete puzzle
+    if(checkGameComplete()) {
+        gameWon();
+    }
+}
+
+hintBtn.addEventListener("click", function(){
+    useHint();
+});
 
 
 function isDailyChallengeCompletedToday() {

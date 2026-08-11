@@ -114,6 +114,10 @@
                     <button id="eraseBtn" class="erase-btn">
                         ⌫ Erase
                     </button>
+
+                    <button id="hintBtn" class="hint-btn">
+                        💡 Hint (<span id="hintCount">0</span>)
+                    </button>
                 </div>
             </div>
 
