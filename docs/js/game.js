@@ -110,6 +110,8 @@ function createBoard(size, difficulty, daily = false) {
 
 function startGame(size, difficulty, daily = false) {
 
+    size = Number(size);
+
     selectedCell = null;
     isDailyChallenge = daily;
     selectedDifficulty = difficulty;
@@ -604,7 +606,7 @@ function useHint() {
         //Only consider cells that the player can still solve
         if(
             cell.classList.contains("empty-cell") &&
-            !cell/classList.contains("given-cell") &&
+            !cell.classList.contains("given-cell") &&
             !cell.classList.contains("correct-cell")
         ){
             const row =Number(cell.dataset.row);
