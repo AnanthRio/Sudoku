@@ -129,6 +129,7 @@ gameOverHomeBtn.addEventListener("click", function () {
     gameOverModal.style.display = "none";
     gameSection.style.display = "none";
     homeActions.style.display = "flex";
+
     // Game is finished — no Continue
     continueGameArea.style.display = "none";
     selectedCell = null;
