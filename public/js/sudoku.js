@@ -103,9 +103,7 @@ function isValid(board, row, col, number, size) {
 
     // Check box
     for (let r = 0; r < boxRows; r++) {
-
         for (let c = 0; c < boxCols; c++) {
-
             if (
                 board[startRow + r][startCol + c] === number
             ) {
@@ -113,7 +111,6 @@ function isValid(board, row, col, number, size) {
             }
         }
     }
-
     return true;
 }
 
@@ -123,9 +120,7 @@ function isValid(board, row, col, number, size) {
 // =======================
 
 function shuffle(array, randomFn = Math.random) {
-
     for (let i = array.length - 1; i > 0; i--) {
-
         const j = Math.floor(randomFn() * (i + 1));
 
         [array[i], array[j]] =

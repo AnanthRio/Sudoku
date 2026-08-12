@@ -447,7 +447,8 @@ function saveGame() {
         puzzleBoard: puzzleBoard,
         playerAnswers: playerAnswers,
         mistakes: mistakes,
-        elapsedSeconds: elapsedSeconds
+        elapsedSeconds: elapsedSeconds,
+        dailyDate: isDailyChallenge ? getTodayDateKey() : null
     };
 
     const saveKey = isDailyChallenge
@@ -555,7 +556,6 @@ function getTodayDateKey() {
     return `${year}-${month}-${day}`;
 }
 
-
 function markDailyChallengeCompleted() {
     const todayKey = getTodayDateKey();
     localStorage.setItem("sudokuDailyCompleted", todayKey);
@@ -572,16 +572,13 @@ function isDailyChallengeFailedToday() {
 }
 
 function resetDailyStreak() {
-
     const stats = getDailyStats();
     stats.currentStreak = 0;
     saveDailyStats(stats);
 }
 
 function updateHintDisplay() {
-
     const remaining = maxHints - hintsUsed;
-
     hintCount.textContent = remaining;
 
     if (remaining <= 0) {
@@ -684,7 +681,6 @@ function updateDailyChallengeButton() {
 function updateDailyStreakDisplay() {
 
     const stats = getDailyStats();
-
     dailyStreakDisplay.textContent = `🔥 ${stats.currentStreak}`;
 }
 
@@ -1177,6 +1173,12 @@ function loadDailySavedGame() {
     }
 
     const savedGame = JSON.parse(savedData);
+
+    // Do not restore an old Daily Challenge from a previous day
+    if (savedGame.dailyDate !== getTodayDateKey()) {
+        localStorage.removeItem(DAILY_SAVE_KEY);
+        return false;
+    }
 
     // Do not restore a Daily game that already reached Game Over
     if (Number(savedGame.mistakes) >= maxMistakes) {
