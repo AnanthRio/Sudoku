@@ -448,6 +448,7 @@ function saveGame() {
         playerAnswers: playerAnswers,
         mistakes: mistakes,
         elapsedSeconds: elapsedSeconds,
+        hintsUsed: hintsUsed,
         dailyDate: isDailyChallenge ? getTodayDateKey() : null
     };
 
@@ -1193,10 +1194,18 @@ function loadDailySavedGame() {
         maxMistakes
     );
 
+    hintsUsed = Number(savedGame.hintsUsed) || 0;
+    maxHints = 3;
+    updateHintDisplay();
+
     elapsedSeconds = savedGame.elapsedSeconds;
     selectedDifficulty = savedGame.difficulty;
     selectedCell = null;
     isDailyChallenge = true;
+    hintsUsed = 0;
+    maxHints = 3;
+    updateHintDisplay();
+
     // Reset pause state when restoring Daily Challenge
     isPaused = false;
     sudokuBoard.classList.remove("paused");
