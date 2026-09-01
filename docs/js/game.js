@@ -73,6 +73,9 @@ function createBoard(size, difficulty, daily = false) {
             if (size === 6) {
                 boxRows = 2;
                 boxCols = 3;
+            } else if (size === 16) {
+                boxRows = 4;
+                boxCols = 4;
             } else {
                 boxRows = 3;
                 boxCols = 3;
@@ -89,8 +92,12 @@ function createBoard(size, difficulty, daily = false) {
             }
 
             if (puzzleBoard[row][col] !== 0) {
-                cell.textContent = puzzleBoard[row][col];
-                cell.classList.add("given-cell");
+                const value = puzzleBoard[row][col];
+
+                cell.textContent =
+                    value <= 9
+                        ? value
+                        : String.fromCharCode(55 + value);
 
             } else {
                 cell.textContent = "";
@@ -121,6 +128,8 @@ function startGame(size, difficulty, daily = false) {
     if (size === 6) {
         maxHints = 2;
     } else if (size === 9) {
+        maxHints = 3;
+    } else if (size === 16) {
         maxHints = 3;
     }
     updateHintDisplay();
@@ -174,7 +183,10 @@ function createNumberPad(size) {
     for (let number = 1; number <= size; number++) {
         const button = document.createElement("button");
         button.classList.add("number-btn");
-        button.textContent = number;
+        button.textContent =
+            number <= 9
+                ? number
+                : String.fromCharCode(55 + number);
         button.dataset.number = number;
         button.addEventListener("click", function () {
             enterNumber(number);
@@ -186,7 +198,6 @@ function createNumberPad(size) {
 function updateCompletedNumbers() {
 
     const size = solutionBoard.length;
-
     for (let number = 1; number <= size; number++) {
         let correctCount = 0;
         const cells = document.querySelectorAll(".sudoku-cell");
@@ -196,8 +207,13 @@ function updateCompletedNumbers() {
             const row = Number(cell.dataset.row);
             const col = Number(cell.dataset.col);
 
+            const cellValue =
+                cell.textContent >= "1" && cell.textContent <= "9"
+                    ? Number(cell.textContent)
+                    : cell.textContent.charCodeAt(0) - 55;
+
             if (
-                Number(cell.textContent) === number &&
+                cellValue === number &&
                 solutionBoard[row][col] === number
             ) {
                 correctCount++;
@@ -230,7 +246,12 @@ function checkCompletedSections(row, col) {
             `.sudoku-cell[data-row="${row}"][data-col="${c}"]`
         );
 
-        if (Number(cell.textContent) !== solutionBoard[row][c]) {
+        if (
+            (cell.textContent >= "1" && cell.textContent <= "9"
+                ? Number(cell.textContent)
+                : cell.textContent.charCodeAt(0) - 55
+            ) !== solutionBoard[row][c]
+        ) {
             rowComplete = false;
             break;
         }
@@ -257,7 +278,12 @@ function checkCompletedSections(row, col) {
             `.sudoku-cell[data-row="${r}"][data-col="${col}"]`
         );
 
-        if (Number(cell.textContent) !== solutionBoard[r][col]) {
+        const cellValue =
+            cell.textContent >= "1" && cell.textContent <= "9"
+                ? Number(cell.textContent)
+                : cell.textContent.charCodeAt(0) - 55;
+
+        if (cellValue !== solutionBoard[r][col]) {
             colComplete = false;
             break;
         }
@@ -285,6 +311,9 @@ function checkCompletedSections(row, col) {
     if (size === 6) {
         boxRows = 2;
         boxCols = 3;
+    } else if (size === 16) {
+        boxRows = 4;
+        boxCols = 4;
     } else {
         boxRows = 3;
         boxCols = 3;
@@ -305,7 +334,12 @@ function checkCompletedSections(row, col) {
 
             boxCells.push(cell);
 
-            if (Number(cell.textContent) !== solutionBoard[r][c]) {
+            const cellValue =
+                cell.textContent >= "1" && cell.textContent <= "9"
+                    ? Number(cell.textContent)
+                    : cell.textContent.charCodeAt(0) - 55;
+
+            if (cellValue !== solutionBoard[r][c]) {
                 boxComplete = false;
             }
         }
@@ -357,7 +391,10 @@ function enterNumber(number) {
     const col = Number(selectedCell.dataset.col);
 
     // Show entered number
-    selectedCell.textContent = number;
+    selectedCell.textContent =
+        number <= 9
+            ? number
+            : String.fromCharCode(55 + number);
     document.querySelectorAll(".related-cell")
         .forEach(function (cell) {
             cell.classList.remove("related-cell");
@@ -432,10 +469,14 @@ function saveGame() {
             if (cell.classList.contains("given-cell")) {
                 playerAnswers[row][col] = null;
             } else {
-                playerAnswers[row][col] =
-                    cell.textContent === ""
-                        ? 0
-                        : Number(cell.textContent);
+                if (cell.textContent === "") {
+                    playerAnswers[row][col] = 0;
+                } else {
+                    playerAnswers[row][col] =
+                        cell.textContent >= "1" && cell.textContent <= "9"
+                            ? Number(cell.textContent)
+                            : cell.textContent.charCodeAt(0) - 55;
+                }
             }
         }
     }
@@ -631,7 +672,12 @@ function useHint() {
     const target = emptyCells[randomIndex];
 
     // Reveal correct answer
-    target.cell.textContent = solutionBoard[target.row][target.col];
+    const answer = solutionBoard[target.row][target.col];
+
+    target.cell.textContent =
+        answer <= 9
+            ? answer
+            : String.fromCharCode(55 + answer);
     target.cell.classList.add("correct-cell");
     target.cell.classList.add("hint-cell");
 
@@ -792,8 +838,10 @@ function checkGameComplete() {
     for (let cell of emptyCells) {
         const row = Number(cell.dataset.row);
         const col = Number(cell.dataset.col);
-        const enteredNumber = Number(cell.textContent);
-
+        const enteredNumber =
+            cell.textContent >= "1" && cell.textContent <= "9"
+                ? Number(cell.textContent)
+                : cell.textContent.charCodeAt(0) - 55;
         // One cell is empty or wrong
         if (enteredNumber !== solutionBoard[row][col]) {
             return false;
@@ -819,7 +867,12 @@ function highlightSameNumbers(number) {
 
     cells.forEach(function (cell) {
 
-        if (cell.textContent === String(number)) {
+        const displayValue =
+            number <= 9
+                ? String(number)
+                : String.fromCharCode(55 + number);
+
+        if (cell.textContent === displayValue) {
             cell.classList.add("same-number-cell");
         }
 
@@ -1095,8 +1148,14 @@ function selectCell(cell) {
 
     const row = Number(selectedCell.dataset.row);
     const col = Number(selectedCell.dataset.col);
-    const number = selectedCell.textContent;
+    const displayValue = selectedCell.textContent;
 
+    const number =
+        displayValue >= "1" && displayValue <= "9"
+            ? Number(displayValue)
+            : displayValue === ""
+                ? 0
+                : displayValue.charCodeAt(0) - 55;
     // Clear previous related-cell highlights
     document.querySelectorAll(".related-cell")
         .forEach(function (cell) {
@@ -1109,7 +1168,7 @@ function selectCell(cell) {
             cell.classList.remove("same-number-cell");
         });
 
-    if (number === "") {
+    if (number === 0 ) {
         // EMPTY CELL
         // Highlight row + column + box
         highlightRelatedCells(row, col);
@@ -1250,17 +1309,16 @@ function restoreBoard(size, playerAnswers) {
             // -------------------
             // BOX BORDERS
             // -------------------
-            let boxRows;
-            let boxCols;
-
             if (size === 6) {
                 boxRows = 2;
                 boxCols = 3;
+            } else if (size === 16) {
+                boxRows = 4;
+                boxCols = 4;
             } else {
                 boxRows = 3;
                 boxCols = 3;
             }
-
             if (
                 (col + 1) % boxCols === 0 &&
                 col !== size - 1
@@ -1280,7 +1338,12 @@ function restoreBoard(size, playerAnswers) {
             // ------------------
 
             if (puzzleBoard[row][col] !== 0) {
-                cell.textContent = puzzleBoard[row][col];
+                const value = puzzleBoard[row][col];
+
+                cell.textContent =
+                    value <= 9
+                        ? value
+                        : String.fromCharCode(55 + value);
                 cell.classList.add("given-cell");
 
             } else {
@@ -1294,8 +1357,10 @@ function restoreBoard(size, playerAnswers) {
                 const answer = playerAnswers[row][col];
 
                 if (answer !== 0) {
-                    cell.textContent = answer;
-                    if (
+                    cell.textContent =
+                        answer <= 9
+                            ? answer
+                            : String.fromCharCode(55 + answer); if (
                         answer ===
                         solutionBoard[row][col]
                     ) {
@@ -1331,12 +1396,12 @@ function highlightRelatedCells(selectedRow, selectedCol) {
         cell.classList.remove("related-cell");
     });
 
-    let boxRows;
-    let boxCols;
-
     if (size === 6) {
         boxRows = 2;
         boxCols = 3;
+    } else if (size === 16) {
+        boxRows = 4;
+        boxCols = 4;
     } else {
         boxRows = 3;
         boxCols = 3;

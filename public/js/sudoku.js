@@ -37,9 +37,7 @@ function fillBoard(board, size, randomFn = Math.random) {
                 shuffle(numbers, randomFn);
 
                 for (let number of numbers) {
-
                     if (isValid(board, row, col, number, size)) {
-
                         // Try number
                         board[row][col] = number;
 
@@ -47,7 +45,6 @@ function fillBoard(board, size, randomFn = Math.random) {
                         if (fillBoard(board, size, randomFn)) {
                             return true;
                         }
-
                         // Didn't work → undo
                         board[row][col] = 0;
                     }
@@ -84,18 +81,11 @@ function isValid(board, row, col, number, size) {
         }
     }
 
-
     // Box dimensions
-    let boxRows;
-    let boxCols;
+    const boxSize = Math.sqrt(size);
 
-    if (size === 6) {
-        boxRows = 2;
-        boxCols = 3;
-    } else {
-        boxRows = 3;
-        boxCols = 3;
-    }
+    const boxRows = boxSize;
+    const boxCols = boxSize;
 
     // Find starting position of box
     const startRow = Math.floor(row / boxRows) * boxRows;
@@ -104,13 +94,12 @@ function isValid(board, row, col, number, size) {
     // Check box
     for (let r = 0; r < boxRows; r++) {
         for (let c = 0; c < boxCols; c++) {
-            if (
-                board[startRow + r][startCol + c] === number
-            ) {
+            if (board[startRow + r][startCol + c] === number) {
                 return false;
             }
         }
     }
+
     return true;
 }
 
@@ -216,7 +205,7 @@ function countSolutions(board, size, limit = 2) {
         ) {
 
             board[emptyRow][emptyCol] = number;
-            solutionCount += countSolutions(board,size,limit);
+            solutionCount += countSolutions(board, size, limit);
 
             // Undo
             board[emptyRow][emptyCol] = 0;
@@ -236,11 +225,11 @@ function countSolutions(board, size, limit = 2) {
 // CREATE PUZZLE
 // =======================
 
-function createPuzzle(solutionBoard,size,difficulty,randomFn = Math.random) {
+function createPuzzle(solutionBoard, size, difficulty, randomFn = Math.random) {
     // Copy solved board
-    const puzzle =solutionBoard.map(function (row) {
-            return [...row];
-        });
+    const puzzle = solutionBoard.map(function (row) {
+        return [...row];
+    });
 
 
     // =================
