@@ -308,6 +308,10 @@ body.dark-mode[data-theme="orange"] {
     transform: translateY(-2px);
 }
 
+.board-size-btn[data-size="16"] {
+    display: block !important;
+}
+
 
 /* =========================
    DIFFICULTY OPTIONS
