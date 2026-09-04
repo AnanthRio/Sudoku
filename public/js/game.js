@@ -39,6 +39,8 @@ const statDailyStreak = document.getElementById("statDailyStreak");
 const statBestDailyStreak = document.getElementById("statBestDailyStreak");
 const hintBtn = document.getElementById("hintBtn");
 const hintCount = document.getElementById("hintCount");
+const ruleIntro = document.getElementById("ruleIntro");
+const boxRule = document.getElementById("boxRule");
 
 
 function createBoard(size, difficulty, daily = false) {
@@ -48,6 +50,7 @@ function createBoard(size, difficulty, daily = false) {
     sudokuBoard.innerHTML = "";
     sudokuBoard.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     sudokuBoard.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+    board.classList.toggle("board-16", size === 16);
 
     let randomFn = Math.random;
 
@@ -114,6 +117,34 @@ function createBoard(size, difficulty, daily = false) {
     createNumberPad(size);
 }
 
+function updateHowToPlay(size) {
+
+    if (size === 6) {
+
+        ruleIntro.textContent =
+            "Fill every empty cell using numbers 1–6.";
+
+        boxRule.textContent =
+            "No repeated numbers in each 2×3 box.";
+
+    } else if (size === 9) {
+
+        ruleIntro.textContent =
+            "Fill every empty cell using numbers 1–9.";
+
+        boxRule.textContent =
+            "No repeated numbers in each 3×3 box.";
+
+    } else if (size === 16) {
+
+        ruleIntro.textContent =
+            "Fill every empty cell using numbers 1–9 and letters A–G.";
+
+        boxRule.textContent =
+            "No repeated symbols in each 4×4 box.";
+    }
+}
+
 
 function startGame(size, difficulty, daily = false) {
 
@@ -143,6 +174,7 @@ function startGame(size, difficulty, daily = false) {
     pauseBtn.textContent = "⏸";
 
     gameMode.textContent = size + "×" + size + " • " + difficulty.toUpperCase();
+    updateHowToPlay(size);
 
     createBoard(size, difficulty, daily);
 
@@ -1105,15 +1137,46 @@ document.addEventListener("keydown", function (event) {
     const key = event.key;
 
     // Number keys
+    // Number keys
     if (key >= "1" && key <= "9") {
+
         const number = Number(key);
-        // Find current board size
         const size = solutionBoard.length;
-        // Prevent 7,8,9 on a 6×6 board
+
+        // Prevent 7, 8, 9 on a 6x6 board
         if (number <= size) {
             enterNumber(number);
         }
+
         return;
+    }
+
+
+    // Letter keys for 16x16
+    if (key.length === 1) {
+
+        const letter = key.toUpperCase();
+
+        const letters = {
+            A: 10,
+            B: 11,
+            C: 12,
+            D: 13,
+            E: 14,
+            F: 15,
+            G: 16
+        };
+
+        const number = letters[letter];
+        const size = solutionBoard.length;
+
+        if (
+            size === 16 &&
+            number !== undefined
+        ) {
+            enterNumber(number);
+            return;
+        }
     }
 
     if (key === "Backspace" || key === "Delete") {
@@ -1167,7 +1230,7 @@ function selectCell(cell) {
             cell.classList.remove("same-number-cell");
         });
 
-    if (number === 0 ) {
+    if (number === 0) {
         // EMPTY CELL
         // Highlight row + column + box
         highlightRelatedCells(row, col);

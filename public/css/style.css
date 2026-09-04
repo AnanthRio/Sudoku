@@ -362,7 +362,7 @@ body.dark-mode[data-theme="orange"] {
     cursor: pointer;
 }
 
-.back-btn{
+.back-btn {
     padding: 9px 18px;
     border: none;
     border-radius: 6px;
@@ -691,7 +691,7 @@ Remaining cells
     font-size: 21px;
 }
 
-.how-to-play > p {
+.how-to-play>p {
     color: var(--secondary-text);
     line-height: 1.5;
     margin-bottom: 18px;
@@ -914,15 +914,13 @@ Remaining cells
 
     0% {
         transform:
-            translateY(-20px)
-            rotate(0deg);
+            translateY(-20px) rotate(0deg);
         opacity: 1;
     }
 
     100% {
         transform:
-            translateY(110vh)
-            rotate(720deg);
+            translateY(110vh) rotate(720deg);
         opacity: 0;
     }
 }
@@ -955,15 +953,20 @@ Remaining cells
 }
 
 @keyframes wrongShake {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateX(0);
     }
+
     25% {
         transform: translateX(-4px);
     }
+
     50% {
         transform: translateX(4px);
     }
+
     75% {
         transform: translateX(-2px);
     }
@@ -976,9 +979,12 @@ Remaining cells
 }
 
 @keyframes mistakePulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.15);
         color: #ff4757;
@@ -1036,4 +1042,75 @@ Remaining cells
     color: var(--text-color);
     font-weight: 600;
     text-align: center;
+}
+
+/* =========================================
+   16x16 BOARD
+========================================= */
+
+.sudoku-board.board-16 {
+    width: 560px;
+    height: 560px;
+}
+
+.sudoku-board.board-16 .sudoku-cell {
+    font-size: 18px;
+}
+
+
+/* =========================================
+   16x16 NUMBER PAD
+========================================= */
+
+.game-section:has(.sudoku-board.board-16) .number-pad {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 8px;
+    width: 560px;
+    margin-top: 20px;
+}
+
+.game-section:has(.sudoku-board.board-16) .number-btn {
+    width: auto;
+    height: 42px;
+}
+
+
+/* =========================================
+   16x16 TOOLS
+========================================= */
+
+.game-section:has(.sudoku-board.board-16) .game-tools {
+    margin-top: 12px;
+}
+
+/* =========================================
+   RESPONSIVE 16x16
+========================================= */
+
+@media (max-width: 900px) {
+
+    .sudoku-board.board-16 {
+        width: min(90vw, 560px);
+        height: min(90vw, 560px);
+    }
+
+    .game-section:has(.sudoku-board.board-16) .number-pad {
+        width: min(90vw, 560px);
+        grid-template-columns: repeat(9, 1fr);
+    }
+
+    .sudoku-board.board-16 .sudoku-cell {
+        font-size: clamp(11px, 3vw, 18px);
+    }
+
+    .game-section:has(.sudoku-board.board-16) .number-btn {
+        height: 38px;
+        font-size: 16px;
+    }
+
+    .how-to-play {
+        position: static;
+        margin: 30px auto 0;
+    }
 }
