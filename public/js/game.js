@@ -832,7 +832,6 @@ window.addEventListener("beforeunload", function () {
 
 
 function checkGameComplete() {
-
     const emptyCells = document.querySelectorAll(".empty-cell");
 
     for (let cell of emptyCells) {

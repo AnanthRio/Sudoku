@@ -190,18 +190,11 @@ function countSolutions(board, size, limit = 2) {
         return 1;
     }
 
-
     let solutionCount = 0;
 
     for (let number = 1; number <= size; number++) {
         if (
-            isValid(
-                board,
-                emptyRow,
-                emptyCol,
-                number,
-                size
-            )
+            isValid(board,emptyRow,emptyCol,number,size)
         ) {
 
             board[emptyRow][emptyCol] = number;
@@ -231,7 +224,6 @@ function createPuzzle(solutionBoard, size, difficulty, randomFn = Math.random) {
         return [...row];
     });
 
-
     // =================
     // DIFFICULTY
     // =================
@@ -255,10 +247,8 @@ function createPuzzle(solutionBoard, size, difficulty, randomFn = Math.random) {
             removePercent = 0.50;
     }
 
-
     const totalCells = size * size;
     const targetRemovals = Math.floor(totalCells * removePercent);
-
 
     // =========================
     // CELL POSITIONS
@@ -268,7 +258,6 @@ function createPuzzle(solutionBoard, size, difficulty, randomFn = Math.random) {
 
     for (let row = 0; row < size; row++) {
         for (let col = 0; col < size; col++) {
-
             positions.push({
                 row: row,
                 col: col
