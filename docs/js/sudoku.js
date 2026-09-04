@@ -4,13 +4,114 @@
 
 function generateSolvedBoard(size, randomFn = Math.random) {
 
+    // 16x16 uses an optimized pattern generator
+    if (size === 16) {
+        return generate16x16Board(randomFn);
+    }
+
+    // Existing generator for 6x6 and 9x9
     const board = Array.from(
         { length: size },
         () => Array(size).fill(0)
     );
 
     fillBoard(board, size, randomFn);
+
     return board;
+}
+
+
+// =========================
+// FAST 16x16 GENERATOR
+// =========================
+
+function generate16x16Board(randomFn = Math.random) {
+
+    const size = 16;
+    const boxSize = 4;
+
+    const board = Array.from(
+        { length: size },
+        () => Array(size).fill(0)
+    );
+
+    /*
+     * Base pattern for a valid 16x16 Sudoku.
+     *
+     * This avoids brute-force backtracking completely.
+     */
+    for (let row = 0; row < size; row++) {
+
+        for (let col = 0; col < size; col++) {
+
+            const value =
+                (
+                    row * boxSize +
+                    Math.floor(row / boxSize) +
+                    col
+                ) % size;
+
+            board[row][col] = value + 1;
+        }
+    }
+
+
+    // =========================
+    // RANDOMIZE NUMBERS
+    // =========================
+
+    const numbers = [];
+
+    for (let i = 1; i <= size; i++) {
+        numbers.push(i);
+    }
+
+    shuffle(numbers, randomFn);
+
+
+    for (let row = 0; row < size; row++) {
+
+        for (let col = 0; col < size; col++) {
+
+            board[row][col] =
+                numbers[board[row][col] - 1];
+        }
+    }
+
+
+    // =========================
+    // RANDOMIZE ROWS
+    // =========================
+
+    const rowOrder = create16x16RowOrder(randomFn);
+
+    const shuffledRows =
+        rowOrder.map(row => [...board[row]]);
+
+    return shuffledRows;
+}
+
+
+// =========================
+// RANDOM ROW ORDER
+// =========================
+
+function create16x16RowOrder(randomFn) {
+
+    const bands = [
+        [0, 1, 2, 3],
+        [4, 5, 6, 7],
+        [8, 9, 10, 11],
+        [12, 13, 14, 15]
+    ];
+
+    shuffle(bands, randomFn);
+
+    for (let band of bands) {
+        shuffle(band, randomFn);
+    }
+
+    return bands.flat();
 }
 
 
@@ -21,45 +122,52 @@ function generateSolvedBoard(size, randomFn = Math.random) {
 function fillBoard(board, size, randomFn = Math.random) {
 
     for (let row = 0; row < size; row++) {
+
         for (let col = 0; col < size; col++) {
 
-            // Find empty cell
             if (board[row][col] === 0) {
 
-                // Numbers 1 → size
                 let numbers = [];
 
                 for (let num = 1; num <= size; num++) {
                     numbers.push(num);
                 }
 
-                // Randomize numbers
                 shuffle(numbers, randomFn);
 
                 for (let number of numbers) {
 
-                    if (isValid(board, row, col, number, size)) {
+                    if (
+                        isValid(
+                            board,
+                            row,
+                            col,
+                            number,
+                            size
+                        )
+                    ) {
 
-                        // Try number
                         board[row][col] = number;
 
-                        // Continue solving
-                        if (fillBoard(board, size, randomFn)) {
+                        if (
+                            fillBoard(
+                                board,
+                                size,
+                                randomFn
+                            )
+                        ) {
                             return true;
                         }
 
-                        // Didn't work → undo
                         board[row][col] = 0;
                     }
                 }
 
-                // No number worked
                 return false;
             }
         }
     }
 
-    // No empty cells remain
     return true;
 }
 
@@ -72,32 +180,58 @@ function isValid(board, row, col, number, size) {
 
     // Check row
     for (let i = 0; i < size; i++) {
+
         if (board[row][i] === number) {
             return false;
         }
     }
 
+
     // Check column
     for (let i = 0; i < size; i++) {
+
         if (board[i][col] === number) {
             return false;
         }
     }
 
+
     // Box dimensions
-    const boxSize = Math.sqrt(size);
+    let boxRows;
+    let boxCols;
 
-    const boxRows = boxSize;
-    const boxCols = boxSize;
+    if (size === 6) {
 
-    // Find starting position of box
-    const startRow = Math.floor(row / boxRows) * boxRows;
-    const startCol = Math.floor(col / boxCols) * boxCols;
+        boxRows = 2;
+        boxCols = 3;
+
+    } else if (size === 16) {
+
+        boxRows = 4;
+        boxCols = 4;
+
+    } else {
+
+        boxRows = 3;
+        boxCols = 3;
+    }
+
+
+    const startRow =
+        Math.floor(row / boxRows) * boxRows;
+
+    const startCol =
+        Math.floor(col / boxCols) * boxCols;
+
 
     // Check box
     for (let r = 0; r < boxRows; r++) {
+
         for (let c = 0; c < boxCols; c++) {
-            if (board[startRow + r][startCol + c] === number) {
+
+            if (
+                board[startRow + r][startCol + c] === number
+            ) {
                 return false;
             }
         }
@@ -112,12 +246,23 @@ function isValid(board, row, col, number, size) {
 // =======================
 
 function shuffle(array, randomFn = Math.random) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(randomFn() * (i + 1));
 
-        [array[i], array[j]] =
-            [array[j], array[i]];
+    for (let i = array.length - 1; i > 0; i--) {
+
+        const j =
+            Math.floor(
+                randomFn() * (i + 1)
+            );
+
+        [
+            array[i],
+            array[j]
+        ] = [
+            array[j],
+            array[i]
+        ];
     }
+
     return array;
 }
 
@@ -129,11 +274,17 @@ function shuffle(array, randomFn = Math.random) {
 function getDailySeed() {
 
     const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
 
-    // Convert today's date into one stable number
+    const year =
+        today.getFullYear();
+
+    const month =
+        today.getMonth() + 1;
+
+    const day =
+        today.getDate();
+
+
     return (
         year * 10000 +
         month * 100 +
@@ -161,6 +312,7 @@ function createSeededRandom(seed) {
     };
 }
 
+
 // =======================
 // COUNT SOLUTIONS
 // =======================
@@ -170,9 +322,12 @@ function countSolutions(board, size, limit = 2) {
     let emptyRow = -1;
     let emptyCol = -1;
 
+
     // Find first empty cell
     for (let row = 0; row < size; row++) {
+
         for (let col = 0; col < size; col++) {
+
             if (board[row][col] === 0) {
 
                 emptyRow = row;
@@ -188,7 +343,7 @@ function countSolutions(board, size, limit = 2) {
     }
 
 
-    // No empty cells = one valid solution found
+    // No empty cells
     if (emptyRow === -1) {
         return 1;
     }
@@ -196,7 +351,13 @@ function countSolutions(board, size, limit = 2) {
 
     let solutionCount = 0;
 
-    for (let number = 1; number <= size; number++) {
+
+    for (
+        let number = 1;
+        number <= size;
+        number++
+    ) {
+
         if (
             isValid(
                 board,
@@ -208,12 +369,20 @@ function countSolutions(board, size, limit = 2) {
         ) {
 
             board[emptyRow][emptyCol] = number;
-            solutionCount += countSolutions(board, size, limit);
+
+            solutionCount +=
+                countSolutions(
+                    board,
+                    size,
+                    limit
+                );
+
 
             // Undo
             board[emptyRow][emptyCol] = 0;
 
-            // We only care whether there is MORE than 1
+
+            // We only care about multiple solutions
             if (solutionCount >= limit) {
                 return solutionCount;
             }
@@ -228,11 +397,18 @@ function countSolutions(board, size, limit = 2) {
 // CREATE PUZZLE
 // =======================
 
-function createPuzzle(solutionBoard, size, difficulty, randomFn = Math.random) {
+function createPuzzle(
+    solutionBoard,
+    size,
+    difficulty,
+    randomFn = Math.random
+) {
+
     // Copy solved board
-    const puzzle = solutionBoard.map(function (row) {
-        return [...row];
-    });
+    const puzzle =
+        solutionBoard.map(function (row) {
+            return [...row];
+        });
 
 
     // =================
@@ -242,34 +418,97 @@ function createPuzzle(solutionBoard, size, difficulty, randomFn = Math.random) {
     let removePercent;
 
     switch (difficulty) {
+
         case "easy":
             removePercent = 0.40;
             break;
+
         case "medium":
             removePercent = 0.50;
             break;
+
         case "hard":
             removePercent = 0.60;
             break;
+
         case "expert":
             removePercent = 0.70;
             break;
+
         default:
             removePercent = 0.50;
     }
 
 
-    const totalCells = size * size;
-    const targetRemovals = Math.floor(totalCells * removePercent);
+    const totalCells =
+        size * size;
+
+    const targetRemovals =
+        Math.floor(
+            totalCells * removePercent
+        );
 
 
-    // =========================
-    // CELL POSITIONS
-    // =========================
+    // =====================================================
+    // 16x16 SPECIAL MODE
+    // =====================================================
+
+    /*
+     * DO NOT run countSolutions() for every cell on 16x16.
+     *
+     * That was the reason the browser was freezing.
+     *
+     * Instead, remove cells directly from the already
+     * valid solved board.
+     */
+
+    if (size === 16) {
+
+        const positions = [];
+
+        for (let row = 0; row < size; row++) {
+
+            for (let col = 0; col < size; col++) {
+
+                positions.push({
+                    row: row,
+                    col: col
+                });
+            }
+        }
+
+
+        shuffle(
+            positions,
+            randomFn
+        );
+
+
+        for (
+            let i = 0;
+            i < targetRemovals;
+            i++
+        ) {
+
+            const position =
+                positions[i];
+
+            puzzle[position.row][position.col] = 0;
+        }
+
+
+        return puzzle;
+    }
+
+
+    // =====================================================
+    // EXISTING 6x6 / 9x9 PUZZLE GENERATION
+    // =====================================================
 
     const positions = [];
 
     for (let row = 0; row < size; row++) {
+
         for (let col = 0; col < size; col++) {
 
             positions.push({
@@ -280,7 +519,11 @@ function createPuzzle(solutionBoard, size, difficulty, randomFn = Math.random) {
     }
 
 
-    shuffle(positions, randomFn);
+    shuffle(
+        positions,
+        randomFn
+    );
+
 
     // ====================
     // REMOVE NUMBERS
@@ -288,21 +531,26 @@ function createPuzzle(solutionBoard, size, difficulty, randomFn = Math.random) {
 
     let removed = 0;
 
+
     for (let position of positions) {
 
-        // Already reached target
         if (removed >= targetRemovals) {
             break;
         }
 
+
         const row = position.row;
         const col = position.col;
 
+
         // Save original number
-        const backup = puzzle[row][col];
+        const backup =
+            puzzle[row][col];
+
 
         // Temporarily remove
         puzzle[row][col] = 0;
+
 
         // Copy board for solver
         const testBoard =
@@ -311,15 +559,22 @@ function createPuzzle(solutionBoard, size, difficulty, randomFn = Math.random) {
             });
 
 
-        const solutions = countSolutions(testBoard, size);
+        const solutions =
+            countSolutions(
+                testBoard,
+                size
+            );
+
 
         if (solutions === 1) {
-            // Safe removal
+
             removed++;
+
         } else {
-            // Multiple solutions:
-            // put number back
-            puzzle[row][col] = backup;
+
+            // Put number back
+            puzzle[row][col] =
+                backup;
         }
     }
 
