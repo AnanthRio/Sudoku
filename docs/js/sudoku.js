@@ -41,12 +41,9 @@ function generate16x16Board(randomFn = Math.random) {
      * This avoids brute-force backtracking completely.
      */
     for (let row = 0; row < size; row++) {
-
         for (let col = 0; col < size; col++) {
-
             const value =
-                (
-                    row * boxSize +
+                (row * boxSize +
                     Math.floor(row / boxSize) +
                     col
                 ) % size;
@@ -70,9 +67,7 @@ function generate16x16Board(randomFn = Math.random) {
 
 
     for (let row = 0; row < size; row++) {
-
         for (let col = 0; col < size; col++) {
-
             board[row][col] =
                 numbers[board[row][col] - 1];
         }
@@ -84,10 +79,7 @@ function generate16x16Board(randomFn = Math.random) {
     // =========================
 
     const rowOrder = create16x16RowOrder(randomFn);
-
-    const shuffledRows =
-        rowOrder.map(row => [...board[row]]);
-
+    const shuffledRows = rowOrder.map(row => [...board[row]]);
     return shuffledRows;
 }
 
@@ -120,15 +112,10 @@ function create16x16RowOrder(randomFn) {
 // =========================
 
 function fillBoard(board, size, randomFn = Math.random) {
-
     for (let row = 0; row < size; row++) {
-
         for (let col = 0; col < size; col++) {
-
             if (board[row][col] === 0) {
-
                 let numbers = [];
-
                 for (let num = 1; num <= size; num++) {
                     numbers.push(num);
                 }
@@ -136,38 +123,20 @@ function fillBoard(board, size, randomFn = Math.random) {
                 shuffle(numbers, randomFn);
 
                 for (let number of numbers) {
-
-                    if (
-                        isValid(
-                            board,
-                            row,
-                            col,
-                            number,
-                            size
-                        )
-                    ) {
-
+                    if (isValid(board,row,col,number,size)) {
                         board[row][col] = number;
 
-                        if (
-                            fillBoard(
-                                board,
-                                size,
-                                randomFn
-                            )
+                        if (fillBoard(board,size,randomFn)
                         ) {
                             return true;
                         }
-
                         board[row][col] = 0;
                     }
                 }
-
                 return false;
             }
         }
     }
-
     return true;
 }
 
@@ -177,10 +146,8 @@ function fillBoard(board, size, randomFn = Math.random) {
 // ==========================================
 
 function isValid(board, row, col, number, size) {
-
     // Check row
     for (let i = 0; i < size; i++) {
-
         if (board[row][i] === number) {
             return false;
         }
@@ -189,7 +156,6 @@ function isValid(board, row, col, number, size) {
 
     // Check column
     for (let i = 0; i < size; i++) {
-
         if (board[i][col] === number) {
             return false;
         }
@@ -201,34 +167,23 @@ function isValid(board, row, col, number, size) {
     let boxCols;
 
     if (size === 6) {
-
         boxRows = 2;
         boxCols = 3;
-
     } else if (size === 16) {
-
         boxRows = 4;
         boxCols = 4;
-
     } else {
-
         boxRows = 3;
         boxCols = 3;
     }
 
-
-    const startRow =
-        Math.floor(row / boxRows) * boxRows;
-
-    const startCol =
-        Math.floor(col / boxCols) * boxCols;
+    const startRow = Math.floor(row / boxRows) * boxRows;
+    const startCol = Math.floor(col / boxCols) * boxCols;
 
 
     // Check box
     for (let r = 0; r < boxRows; r++) {
-
         for (let c = 0; c < boxCols; c++) {
-
             if (
                 board[startRow + r][startCol + c] === number
             ) {
@@ -236,7 +191,6 @@ function isValid(board, row, col, number, size) {
             }
         }
     }
-
     return true;
 }
 
@@ -246,23 +200,14 @@ function isValid(board, row, col, number, size) {
 // =======================
 
 function shuffle(array, randomFn = Math.random) {
-
     for (let i = array.length - 1; i > 0; i--) {
-
         const j =
             Math.floor(
                 randomFn() * (i + 1)
             );
 
-        [
-            array[i],
-            array[j]
-        ] = [
-                array[j],
-                array[i]
-            ];
+        [array[i],array[j]] = [array[j],array[i]];
     }
-
     return array;
 }
 
@@ -272,18 +217,10 @@ function shuffle(array, randomFn = Math.random) {
 // =======================
 
 function getDailySeed() {
-
     const today = new Date();
-
-    const year =
-        today.getFullYear();
-
-    const month =
-        today.getMonth() + 1;
-
-    const day =
-        today.getDate();
-
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
 
     return (
         year * 10000 +
@@ -298,16 +235,9 @@ function getDailySeed() {
 // =======================
 
 function createSeededRandom(seed) {
-
     let value = seed;
-
     return function () {
-
-        value = (
-            value * 9301 +
-            49297
-        ) % 233280;
-
+        value = (value * 9301 +49297) % 233280;
         return value / 233280;
     };
 }
@@ -325,14 +255,10 @@ function countSolutions(board, size, limit = 2) {
 
     // Find first empty cell
     for (let row = 0; row < size; row++) {
-
         for (let col = 0; col < size; col++) {
-
             if (board[row][col] === 0) {
-
                 emptyRow = row;
                 emptyCol = col;
-
                 break;
             }
         }
@@ -342,15 +268,12 @@ function countSolutions(board, size, limit = 2) {
         }
     }
 
-
     // No empty cells
     if (emptyRow === -1) {
         return 1;
     }
 
-
     let solutionCount = 0;
-
 
     for (
         let number = 1;
@@ -358,29 +281,14 @@ function countSolutions(board, size, limit = 2) {
         number++
     ) {
 
-        if (
-            isValid(
-                board,
-                emptyRow,
-                emptyCol,
-                number,
-                size
-            )
+        if (isValid(board,emptyRow,emptyCol,number,size)
         ) {
-
             board[emptyRow][emptyCol] = number;
 
-            solutionCount +=
-                countSolutions(
-                    board,
-                    size,
-                    limit
-                );
-
+            solutionCount += countSolutions(board,size,limit);
 
             // Undo
             board[emptyRow][emptyCol] = 0;
-
 
             // We only care about multiple solutions
             if (solutionCount >= limit) {
@@ -402,9 +310,7 @@ function create16x16Puzzle(
     randomFn = Math.random
 ) {
     const size = 16;
-
     const puzzle = solutionBoard.map(row => [...row]);
-
     let removePercent;
 
     switch (difficulty) {
@@ -428,8 +334,7 @@ function create16x16Puzzle(
             removePercent = 0.50;
     }
 
-    const targetRemovals =
-        Math.floor(size * size * removePercent);
+    const targetRemovals = Math.floor(size * size * removePercent);
 
     const positions = [];
 
@@ -449,7 +354,6 @@ function create16x16Puzzle(
 
         puzzle[position.row][position.col] = 0;
     }
-
     return puzzle;
 }
 
@@ -479,7 +383,6 @@ function createPuzzle(
     let removePercent;
 
     switch (difficulty) {
-
         case "easy":
             removePercent = 0.40;
             break;
@@ -501,18 +404,13 @@ function createPuzzle(
     }
 
 
-    const totalCells =
-        size * size;
-
-    const targetRemovals =
-        Math.floor(
-            totalCells * removePercent
-        );
+    const totalCells = size * size;
+    const targetRemovals = Math.floor(totalCells * removePercent);
 
 
-    // =====================================================
+    // ========================================
     // 16x16 SPECIAL MODE
-    // =====================================================
+    // ========================================
 
     /*
      * DO NOT run countSolutions() for every cell on 16x16.
@@ -537,11 +435,8 @@ function createPuzzle(
     // =====================================================
 
     const positions = [];
-
     for (let row = 0; row < size; row++) {
-
         for (let col = 0; col < size; col++) {
-
             positions.push({
                 row: row,
                 col: col
@@ -549,12 +444,7 @@ function createPuzzle(
         }
     }
 
-
-    shuffle(
-        positions,
-        randomFn
-    );
-
+    shuffle(positions,randomFn);
 
     // ====================
     // REMOVE NUMBERS
@@ -562,26 +452,19 @@ function createPuzzle(
 
     let removed = 0;
 
-
     for (let position of positions) {
-
         if (removed >= targetRemovals) {
             break;
         }
 
-
         const row = position.row;
         const col = position.col;
 
-
         // Save original number
-        const backup =
-            puzzle[row][col];
-
+        const backup = puzzle[row][col];
 
         // Temporarily remove
         puzzle[row][col] = 0;
-
 
         // Copy board for solver
         const testBoard =
@@ -589,26 +472,14 @@ function createPuzzle(
                 return [...row];
             });
 
-
-        const solutions =
-            countSolutions(
-                testBoard,
-                size
-            );
-
+        const solutions = countSolutions(testBoard,size);
 
         if (solutions === 1) {
-
             removed++;
-
         } else {
-
             // Put number back
-            puzzle[row][col] =
-                backup;
+            puzzle[row][col] = backup;
         }
     }
-
-
     return puzzle;
 }

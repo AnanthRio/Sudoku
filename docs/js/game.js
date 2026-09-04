@@ -1,4 +1,3 @@
-
 let mistakes = 0;
 let solutionBoard = [];
 let puzzleBoard = [];
@@ -8,7 +7,6 @@ let isDailyChallenge = false;
 let selectedDifficulty = "easy";
 let hintsUsed = 0;
 let maxHints = 0;
-
 
 
 // =====================
@@ -51,7 +49,7 @@ function createBoard(size, difficulty, daily = false) {
     sudokuBoard.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     sudokuBoard.style.gridTemplateRows = `repeat(${size}, 1fr)`;
     sudokuBoard.classList.toggle("board-16", size === 16);
-    
+
     let randomFn = Math.random;
 
     if (daily) {
@@ -107,7 +105,6 @@ function createBoard(size, difficulty, daily = false) {
                 cell.classList.add("empty-cell");
             }
 
-
             cell.addEventListener("click", function () {
                 selectCell(this);
             });
@@ -120,36 +117,19 @@ function createBoard(size, difficulty, daily = false) {
 function updateHowToPlay(size) {
 
     if (size === 6) {
-
-        ruleIntro.textContent =
-            "Fill every empty cell using numbers 1–6.";
-
-        boxRule.textContent =
-            "No repeated numbers in each 2×3 box.";
-
+        ruleIntro.textContent = "Fill every empty cell using numbers 1–6.";
+        boxRule.textContent = "No repeated numbers in each 2×3 box.";
     } else if (size === 9) {
-
-        ruleIntro.textContent =
-            "Fill every empty cell using numbers 1–9.";
-
-        boxRule.textContent =
-            "No repeated numbers in each 3×3 box.";
-
+        ruleIntro.textContent = "Fill every empty cell using numbers 1–9.";
+        boxRule.textContent = "No repeated numbers in each 3×3 box.";
     } else if (size === 16) {
-
-        ruleIntro.textContent =
-            "Fill every empty cell using numbers 1–9 and letters A–G.";
-
-        boxRule.textContent =
-            "No repeated symbols in each 4×4 box.";
+        ruleIntro.textContent = "Fill every empty cell using numbers 1–9 and letters A–G.";
+        boxRule.textContent = "No repeated symbols in each 4×4 box.";
     }
 }
 
-
 function startGame(size, difficulty, daily = false) {
-
     size = Number(size);
-
     selectedCell = null;
     isDailyChallenge = daily;
     selectedDifficulty = difficulty;
