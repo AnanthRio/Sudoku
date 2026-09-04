@@ -123,10 +123,10 @@ function fillBoard(board, size, randomFn = Math.random) {
                 shuffle(numbers, randomFn);
 
                 for (let number of numbers) {
-                    if (isValid(board,row,col,number,size)) {
+                    if (isValid(board, row, col, number, size)) {
                         board[row][col] = number;
 
-                        if (fillBoard(board,size,randomFn)
+                        if (fillBoard(board, size, randomFn)
                         ) {
                             return true;
                         }
@@ -206,7 +206,7 @@ function shuffle(array, randomFn = Math.random) {
                 randomFn() * (i + 1)
             );
 
-        [array[i],array[j]] = [array[j],array[i]];
+        [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
 }
@@ -237,7 +237,7 @@ function getDailySeed() {
 function createSeededRandom(seed) {
     let value = seed;
     return function () {
-        value = (value * 9301 +49297) % 233280;
+        value = (value * 9301 + 49297) % 233280;
         return value / 233280;
     };
 }
@@ -281,11 +281,11 @@ function countSolutions(board, size, limit = 2) {
         number++
     ) {
 
-        if (isValid(board,emptyRow,emptyCol,number,size)
+        if (isValid(board, emptyRow, emptyCol, number, size)
         ) {
             board[emptyRow][emptyCol] = number;
 
-            solutionCount += countSolutions(board,size,limit);
+            solutionCount += countSolutions(board, size, limit);
 
             // Undo
             board[emptyRow][emptyCol] = 0;
@@ -444,7 +444,7 @@ function createPuzzle(
         }
     }
 
-    shuffle(positions,randomFn);
+    shuffle(positions, randomFn);
 
     // ====================
     // REMOVE NUMBERS
@@ -472,7 +472,7 @@ function createPuzzle(
                 return [...row];
             });
 
-        const solutions = countSolutions(testBoard,size);
+        const solutions = countSolutions(testBoard, size);
 
         if (solutions === 1) {
             removed++;
