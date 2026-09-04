@@ -169,6 +169,11 @@
                         <small>Classic</small>
                     </button>
 
+                    <button class="board-size-btn" data-size="16">
+                        <span>16 × 16</span>
+                        <small>Extreme</small>
+                    </button>
+
                 </div>
             </div>
 
