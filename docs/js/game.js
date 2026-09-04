@@ -50,8 +50,8 @@ function createBoard(size, difficulty, daily = false) {
     sudokuBoard.innerHTML = "";
     sudokuBoard.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     sudokuBoard.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-    board.classList.toggle("board-16", size === 16);
-
+    sudokuBoard.classList.toggle("board-16", size === 16);
+    
     let randomFn = Math.random;
 
     if (daily) {
